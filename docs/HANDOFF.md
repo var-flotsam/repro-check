@@ -55,11 +55,12 @@ Phases 1–2 were pushed 2026-10-22 with the owner's OK.
 
 - The session's network policy blocks jax.org, box.com, phenome.jax.org and
   the JCI file host (cloudfront.net). GitHub, PyPI, conda and Docker Hub work.
-  The owner can add hosts in the project's cloud environment settings.
+  The owner set a new default cloud environment on 2026-10-22 (presumably
+  allowing these hosts). It applies only to new sessions: the Phase 1–2 session
+  still could not reach them at 23:59 UTC. Run Phase 4–5 data fetches from a
+  thread started on the new environment.
 - R is not installed; plan to use conda-forge `r-qtl2` or a rocker image.
 
 ## Open questions for the owner
 
 1. Approve docs/design.md (and its section 10 points).
-2. Add the blocked hosts to the cloud environment's allowed domains. Owner said
-   yes; the hosts were still blocked at 23:51 UTC.
