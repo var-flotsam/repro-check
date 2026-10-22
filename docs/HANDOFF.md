@@ -27,9 +27,8 @@ within tolerances set before the run. Flagship: Keller et al. 2019 JCI
 | 2. design.md | Drafted and committed; **awaiting owner approval** |
 | 3–7 | Not started |
 
-No GitHub repository is attached yet. The repo lives at
-`/home/claude/repro-check` in the session container, with a copy in the
-project files folder.
+Repository: https://github.com/var-flotsam/repro-check (branch `main`).
+Phases 1–2 were pushed 2026-10-22 with the owner's OK.
 
 ## Phase 1 outputs
 
@@ -62,7 +61,5 @@ project files folder.
 ## Open questions for the owner
 
 1. Approve docs/design.md (and its section 10 points).
-2. Create an empty GitHub repo (this session can't create repos); then it gets
-   attached and pushed. Owner has said yes to pushing.
-3. Add the blocked hosts to the cloud environment's allowed domains. Owner said
+2. Add the blocked hosts to the cloud environment's allowed domains. Owner said
    yes; the hosts were still blocked at 23:51 UTC.
