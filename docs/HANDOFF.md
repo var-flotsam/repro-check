@@ -1,6 +1,6 @@
 # HANDOFF
 
-Last updated: 2026-10-22, end of Phase 1.
+Last updated: 2026-10-22, Phase 2 drafted.
 
 ## Project
 
@@ -23,8 +23,8 @@ within tolerances set before the run. Flagship: Keller et al. 2019 JCI
 
 | Phase | State |
 |---|---|
-| 1. Docs, prior art, data availability | Done, committed locally. Awaiting owner's choice of Stage C target |
-| 2. design.md | Not started (waits on Phase 1 answer) |
+| 1. Docs, prior art, data availability | Done. Owner approved the Stage C target (2026-10-22) |
+| 2. design.md | Drafted and committed; **awaiting owner approval** |
 | 3–7 | Not started |
 
 No GitHub repository is attached yet. The repo lives at
@@ -61,6 +61,8 @@ project files folder.
 
 ## Open questions for the owner
 
-1. Approve the proposed Stage C target (see the data-availability doc, §7)?
-2. Which GitHub repo, if any, to push to?
-3. Allow the blocked hosts so Phase 5 can fetch data?
+1. Approve docs/design.md (and its section 10 points).
+2. Create an empty GitHub repo (this session can't create repos); then it gets
+   attached and pushed. Owner has said yes to pushing.
+3. Add the blocked hosts to the cloud environment's allowed domains. Owner said
+   yes; the hosts were still blocked at 23:51 UTC.
