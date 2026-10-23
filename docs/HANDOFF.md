@@ -83,6 +83,11 @@ claims are drafted.
 
 ## Notes for the next phase
 
+- CI installs R from `env/r-linux-64.lock` with the runner's conda (green
+  since run 3). An env made with `scripts/make_r_env.py` (py-rattler) worked in
+  the cloud session but failed on the GitHub runner (`tools` namespace would
+  not load); cause not found. Prefer the lock file with conda/micromamba.
+
 - A null-trait sim showed 1 of 20 noise traits crossing LOD 6 on a small
   genome: expected nulls can fail by chance. Keep this in mind for the
   Hunk/Zfp148 absence claims and say it in the report.
