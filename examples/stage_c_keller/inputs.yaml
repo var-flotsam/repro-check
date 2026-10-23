@@ -1,0 +1,23 @@
+# Stage C: Keller et al. 2019 (doi:10.1172/JCI129143). All public, open access.
+# Fetched only after claims.frozen.yaml was confirmed and frozen.
+inputs:
+  - name: genoprobs
+    url: https://thejacksonlaboratory.box.com/shared/static/4hy4hbjyrxjbrzh570i4g02r62bx3lgk.rds
+    filename: attie_DO500_genoprobs_v5.rds
+    license: No licence stated; fetched at run time, not re-hosted
+    citation: Keller MP et al. 2018 Genetics 209:335-356; JAX via the Carpentries eQTL mapping lesson
+  - name: map
+    url: https://raw.githubusercontent.com/smcclatchy/eqtl-mapping/16c0fbab55becb157e6bc22a8674d3f4686640b1/episodes/data/attie_do_map.rds
+    sha256: dbfd4220a7eb82b6f4949fa2dbac95ebb2eab8b9f969868f57b03e558f1f93de
+    license: CC BY 4.0 (Carpentries lesson)
+    citation: smcclatchy/eqtl-mapping@16c0fbab
+  - name: covar
+    url: https://raw.githubusercontent.com/smcclatchy/eqtl-mapping/16c0fbab55becb157e6bc22a8674d3f4686640b1/episodes/data/attie_do_covar.rds
+    sha256: c05df9c4980aa41ad42bde5981f653ffcebebdf3a83de488e22fd655eb01cb25
+    license: CC BY 4.0 (Carpentries lesson)
+    citation: smcclatchy/eqtl-mapping@16c0fbab
+  - name: mpd
+    url: https://phenome.jax.org/projects/Attie2/csvanimaldata
+    filename: Attie2_animaldata.csv
+    license: MPD terms of use (https://phenome.jax.org/about/termsofuse)
+    citation: Mouse Phenome Database project Attie2 (MPD:1020); Keller MP et al. 2019 JCI

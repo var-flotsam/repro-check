@@ -1,0 +1,20 @@
+trait,mpd_measnum,mpd_varname,paper_label,reading
+ins_3.3G,110719,INS_GLU (3.3 mM),3.3G,raw secretion
+ins_16.7G,110721,INS_GLU (16.7 mM),16.7G,raw secretion
+ins_GLP1,110723,INS_GLU8p3_GLP1,GLP1,raw secretion
+ins_AA,110724,INS_GLU8p3_AA,AA,raw secretion
+ins_PA,110725,INS_GLU16p7_PA,PA,raw secretion
+ins_8.3G_fc_3.3G,110726,INS_GLU8p3_fc_G3p3,8.3G | 3.3G,fold change over baseline
+ins_16.7G_fc_3.3G,110727,INS_GLU16p7_fc_G3p3,16.7G | 3.3G,fold change over baseline
+ins_KCl_fc_3.3G,110728,INS_GLU3p3__KCl_fc_G3p3,KCl | 3.3G,fold change over baseline
+ins_GLP1_fc_3.3G,110729,INS_GLU8p3_GLP1_fc_G3p3,GLP1 | 3.3G,fold change over baseline
+ins_AA_fc_3.3G,110730,INS_GLU8p3_AA_fc_G3p3,AA | 3.3G,fold change over baseline
+ins_PA_fc_3.3G,110731,INS_GLU16p7_PA_fc_G3p3,PA | 3.3G,fold change over baseline
+ins_GLP1_fc_8.3G,110732,INS_GLU8p3_GLP1_fc_G8p3,GLP1 | 8.3G,fold change over baseline
+ins_3.3G_per_content,110735,INS_pct_GLU (3.3 mM),3.3G | ins/islet,percent of islet insulin content
+ins_8.3G_per_content,110736,INS_pct_GLU (8.3 mM),8.3G | ins/islet,percent of islet insulin content
+ins_16.7G_per_content,110737,INS_pct_GLU (16.7 mM),16.7G | ins/islet,percent of islet insulin content
+ins_GLP1_per_content,110739,INS_GLU8p3_GLP1_pct,GLP1 | ins/islet,percent of islet insulin content
+ins_AA_per_content,110740,INS_GLU8p3_AA_pct,AA | ins/islet,percent of islet insulin content
+ins_PA_per_content,110741,INS_GLU16p7_PA_pct,PA | ins/islet,percent of islet insulin content
+gcg_KCl,110750,GCG_GLU3p3_KCl,glucagon KCl (text),raw secretion

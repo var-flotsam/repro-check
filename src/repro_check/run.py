@@ -86,6 +86,12 @@ def _resolve(value: Any, run_dir: Path, provenance: dict[str, Any]) -> Any:
             return str((run_dir / provenance["inputs"][name]["path"]).resolve())
         except KeyError:
             raise RunError(f"run config refers to input {name!r}, which was not fetched") from None
+    if isinstance(value, str) and value.startswith("run:"):
+        # A file a preparation step wrote inside the run directory.
+        path = run_dir / value.removeprefix("run:")
+        if not path.exists():
+            raise RunError(f"run config refers to {value!r}, but {path} does not exist")
+        return str(path.resolve())
     return value
 
 

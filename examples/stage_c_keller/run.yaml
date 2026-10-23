@@ -1,0 +1,82 @@
+# Stage C run config. Trait columns come from prepare.R (see trait_map.csv).
+engine: qtl2
+description: 'Keller et al. 2019 JCI: ex vivo islet secretion QTL, full public sample'
+genoprobs: input:genoprobs
+map: input:map
+pheno: run:derived/pheno.csv
+covar: run:derived/covar.csv
+id_column: id
+traits:
+- name: ins_3.3G
+  transform: log
+- name: ins_16.7G
+  transform: log
+- name: ins_GLP1
+  transform: log
+- name: ins_AA
+  transform: log
+- name: ins_PA
+  transform: log
+- name: ins_8.3G_fc_3.3G
+  transform: log
+- name: ins_16.7G_fc_3.3G
+  transform: log
+- name: ins_KCl_fc_3.3G
+  transform: log
+- name: ins_GLP1_fc_3.3G
+  transform: log
+- name: ins_AA_fc_3.3G
+  transform: log
+- name: ins_PA_fc_3.3G
+  transform: log
+- name: ins_GLP1_fc_8.3G
+  transform: log
+- name: ins_3.3G_per_content
+  transform: log
+- name: ins_8.3G_per_content
+  transform: log
+- name: ins_16.7G_per_content
+  transform: log
+- name: ins_GLP1_per_content
+  transform: log
+- name: ins_AA_per_content
+  transform: log
+- name: ins_PA_per_content
+  transform: log
+- name: gcg_KCl
+  transform: log
+addcovar:
+- sex
+- DOwave
+covar_factors:
+- DOwave
+kinship: loco
+report_threshold: 5
+ci_drop: 1.5
+effects: blup
+n_perm: 0
+seed: 20261023
+cores: 4
+assumptions:
+- 'Genotype probabilities: public attie_DO500_genoprobs_v5.rds (JAX). The paper does not say which genoprobs build
+  it used; GRCm38 assumed.'
+- 'Phenotypes from MPD Attie2, matched to the paper''s trait labels by MPD measure number (trait_map.csv): ''X |
+  3.3G'' and ''X | 8.3G'' are MPD fold-change measures, ''X | ins/islet'' is percent of islet insulin content, unlabelled
+  traits are raw secretion.'
+- Every trait is log-transformed (natural log), as the paper states; non-positive values become missing and are
+  counted in the report.
+- Additive covariates sex and DOwave (factor), as stated; diet_days not used.
+- Allele effects by scan1blup, as the design specifies; the paper does not say which method it used.
+- No permutations in this run (the paper's fixed LOD 6 is the claim threshold); the design's 1,000-permutation check
+  is deferred because of run time.
+ambiguities:
+- 'Zfp148: the Results text says the Chr 16 ~32 Mb KCl locus fell below LOD 6 at N = 500, while Supplemental Table
+  1 lists KCl | 3.3G on Chr 16 at 28.38 Mb, LOD 6.60. Claim K21 follows the table; no absence claim was made for
+  Zfp148.'
+- 'Hunk (K25): the text says ''GLP1-induced secretion'' without the transformation; the raw GLP1 trait is used.'
+- 'Glucagon (K24): the text gives LOD 7.0 conditioned on glucagon content and 6.9 without; the unconditioned trait
+  and 6.9 are used.'
+- MPD lists about 240 mice per secretion measure while the paper mapped 479; the N actually mapped is shown per
+  trait.
+- MPD's description of measure Attie2:115 does not match its variable name; the variable name and measure number
+  are used.

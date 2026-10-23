@@ -1,0 +1,409 @@
+paper:
+  doi: 10.1172/JCI129143
+  citation: Keller MP et al. Gene loci associated with insulin secretion in islets
+    from nondiabetic mice. J Clin Invest 2019;129(10):4419-4432
+  position_units: Mb
+  notes: 'Positions and LODs from Supplemental Table 1 unless the source says Results
+    text. Default tolerances: position ±5 Mb or claimed position inside the 1.5-LOD
+    support interval; LOD ±1.0 (±15% above 10); peak must reach LOD 6 (the paper''s
+    suggestive threshold).'
+claims:
+- id: K01
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; 3.3G; Chr 1; 29.0228 Mbp; LOD 6.6069; A/J..WSB -0.04 0.22 -0.37 -0.04
+    -0.10 0.51 -0.18 0.00
+  trait: ins_3.3G
+  chr: '1'
+  pos_mb: 29.0228
+  lod: 6.6069
+  founders_high:
+  - CAST
+  notes: 'Paper label ''3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as printed:
+    -0.04 0.22 -0.37 -0.04 -0.10 0.51 -0.18 0.00.'
+- id: K02
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; 3.3G | ins/islet; Chr 1; 29.0228 Mbp; LOD 7.0644; A/J..WSB -0.04 0.19
+    -0.40 -0.07 -0.07 0.51 -0.16 0.04
+  trait: ins_3.3G_per_content
+  chr: '1'
+  pos_mb: 29.0228
+  lod: 7.0644
+  founders_high:
+  - CAST
+  notes: 'Paper label ''3.3G | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: -0.04 0.19 -0.40 -0.07 -0.07 0.51 -0.16 0.04.'
+- id: K03
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; 8.3G | ins/islet; Chr 1; 29.0228 Mbp; LOD 6.1346; A/J..WSB -0.20 0.17
+    -0.34 -0.07 -0.12 0.47 0.03 0.05
+  trait: ins_8.3G_per_content
+  chr: '1'
+  pos_mb: 29.0228
+  lod: 6.1346
+  founders_high:
+  - CAST
+  notes: 'Paper label ''8.3G | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: -0.20 0.17 -0.34 -0.07 -0.12 0.47 0.03 0.05.'
+- id: K04
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; AA | ins/islet; Chr 1; 29.0228 Mbp; LOD 7.4243; A/J..WSB -0.27 0.11
+    -0.29 -0.12 -0.22 0.66 0.10 0.04
+  trait: ins_AA_per_content
+  chr: '1'
+  pos_mb: 29.0228
+  lod: 7.4243
+  founders_high:
+  - CAST
+  notes: 'Paper label ''AA | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: -0.27 0.11 -0.29 -0.12 -0.22 0.66 0.10 0.04.'
+- id: K05
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; GLP1; Chr 1; 29.0228 Mbp; LOD 6.8223; A/J..WSB -0.27 0.21 -0.35 -0.02
+    -0.18 0.61 0.03 -0.03
+  trait: ins_GLP1
+  chr: '1'
+  pos_mb: 29.0228
+  lod: 6.8223
+  founders_high:
+  - CAST
+  notes: 'Paper label ''GLP1''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as printed:
+    -0.27 0.21 -0.35 -0.02 -0.18 0.61 0.03 -0.03.'
+- id: K06
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; GLP1 | ins/islet; Chr 1; 29.0228 Mbp; LOD 7.3471; A/J..WSB -0.26 0.20
+    -0.40 -0.05 -0.17 0.63 0.04 0.00
+  trait: ins_GLP1_per_content
+  chr: '1'
+  pos_mb: 29.0228
+  lod: 7.3471
+  founders_high:
+  - CAST
+  notes: 'Paper label ''GLP1 | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: -0.26 0.20 -0.40 -0.05 -0.17 0.63 0.04 0.00.'
+- id: K07
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: the Chr 1 locus at ~34 Mb (Ptpn18)
+    affects secretion at 3.3 and 8.3 mM glucose, GLP1 and amino acids, with the CAST
+    allele associated with increased secretion'
+  quote: QTL 1; AA; Chr 1; 33.8178 Mbp; LOD 6.9389; A/J..WSB -0.23 0.13 0.04 -0.25
+    -0.22 0.73 -0.25 0.05
+  trait: ins_AA
+  chr: '1'
+  pos_mb: 33.8178
+  lod: 6.9389
+  founders_high:
+  - CAST
+  notes: 'Paper label ''AA''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as printed:
+    -0.23 0.13 0.04 -0.25 -0.22 0.73 -0.25 0.05.'
+- id: K08
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 5; GLP1 | 8.3G; Chr 2; 83.826 Mbp; LOD 7.5381; A/J..WSB -0.01 0.11 0.00
+    -0.06 -0.20 -0.15 0.08 0.24
+  trait: ins_GLP1_fc_8.3G
+  chr: '2'
+  pos_mb: 83.826
+  lod: 7.5381
+  notes: 'Paper label ''GLP1 | 8.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: -0.01 0.11 0.00 -0.06 -0.20 -0.15 0.08 0.24.'
+- id: K09
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 8; KCl | 3.3G; Chr 3; 41.1508 Mbp; LOD 6.3472; A/J..WSB 0.04 -0.15 0.17
+    -0.20 -0.03 -0.18 0.11 0.24
+  trait: ins_KCl_fc_3.3G
+  chr: '3'
+  pos_mb: 41.1508
+  lod: 6.3472
+  notes: 'Paper label ''KCl | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.04 -0.15 0.17 -0.20 -0.03 -0.18 0.11 0.24.'
+- id: K10
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; GLP1 | 3.3G; Chr 3; 135.5183 Mbp; LOD 8.2587; A/J..WSB 0.08 0.00 0.01
+    0.38 -0.10 -0.23 -0.32 0.18
+  trait: ins_GLP1_fc_3.3G
+  chr: '3'
+  pos_mb: 135.5183
+  lod: 8.2587
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''GLP1 | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.08 0.00 0.01 0.38 -0.10 -0.23 -0.32 0.18.'
+- id: K11
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; 16.7G | 3.3G; Chr 3; 135.5183 Mbp; LOD 7.3566; A/J..WSB 0.07 0.11
+    0.05 0.31 -0.05 -0.18 -0.47 0.16
+  trait: ins_16.7G_fc_3.3G
+  chr: '3'
+  pos_mb: 135.5183
+  lod: 7.3566
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''16.7G | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: 0.07 0.11 0.05 0.31 -0.05 -0.18 -0.47 0.16.'
+- id: K12
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; 8.3G | 3.3G; Chr 3; 135.2328 Mbp; LOD 6.8219; A/J..WSB 0.03 0.02 -0.07
+    0.28 -0.04 -0.16 -0.18 0.11
+  trait: ins_8.3G_fc_3.3G
+  chr: '3'
+  pos_mb: 135.2328
+  lod: 6.8219
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''8.3G | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.03 0.02 -0.07 0.28 -0.04 -0.16 -0.18 0.11.'
+- id: K13
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; AA | 3.3G; Chr 3; 136.0228 Mbp; LOD 6.727; A/J..WSB 0.06 0.05 0.08
+    0.32 -0.04 -0.19 -0.35 0.07
+  trait: ins_AA_fc_3.3G
+  chr: '3'
+  pos_mb: 136.0228
+  lod: 6.727
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''AA | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.06 0.05 0.08 0.32 -0.04 -0.19 -0.35 0.07.'
+- id: K14
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; 16.7G; Chr 3; 135.5183 Mbp; LOD 6.3817; A/J..WSB 0.08 0.17 0.07 0.21
+    -0.08 -0.22 -0.49 0.25
+  trait: ins_16.7G
+  chr: '3'
+  pos_mb: 135.5183
+  lod: 6.3817
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''16.7G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as printed:
+    0.08 0.17 0.07 0.21 -0.08 -0.22 -0.49 0.25.'
+- id: K15
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; PA | 3.3G; Chr 3; 135.5183 Mbp; LOD 6.3163; A/J..WSB 0.01 0.05 -0.01
+    0.24 -0.02 -0.14 -0.27 0.14
+  trait: ins_PA_fc_3.3G
+  chr: '3'
+  pos_mb: 135.5183
+  lod: 6.3163
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''PA | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.01 0.05 -0.01 0.24 -0.02 -0.14 -0.27 0.14.'
+- id: K16
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; 16.7G | ins/islet; Chr 3; 133.5613 Mbp; LOD 6.0938; A/J..WSB 0.13
+    0.17 0.10 0.19 -0.08 -0.28 -0.37 0.13
+  trait: ins_16.7G_per_content
+  chr: '3'
+  pos_mb: 133.5613
+  lod: 6.0938
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''16.7G | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: 0.13 0.17 0.10 0.19 -0.08 -0.28 -0.37 0.13.'
+- id: K17
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; PA; Chr 3; 133.6513 Mbp; LOD 6.0569; A/J..WSB 0.02 0.14 0.09 0.14
+    -0.02 -0.24 -0.26 0.13
+  trait: ins_PA
+  chr: '3'
+  pos_mb: 133.6513
+  lod: 6.0569
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''PA''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as printed:
+    0.02 0.14 0.09 0.14 -0.02 -0.24 -0.26 0.13.'
+- id: K18
+  kind: qtl_peak
+  source: 'Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    ''ex vivo islet QTL''; pattern from Results: Chr 3 ~135 Mb hotspot; CAST and PWK
+    alleles associated with low, NOD and WSB with high secretion'
+  quote: QTL 9; PA | ins/islet; Chr 3; 133.6513 Mbp; LOD 6.1669; A/J..WSB 0.04 0.13
+    0.10 0.15 -0.01 -0.23 -0.28 0.09
+  trait: ins_PA_per_content
+  chr: '3'
+  pos_mb: 133.6513
+  lod: 6.1669
+  founders_high:
+  - NOD
+  - WSB
+  founders_low:
+  - CAST
+  - PWK
+  notes: 'Paper label ''PA | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: 0.04 0.13 0.10 0.15 -0.01 -0.23 -0.28 0.09.'
+- id: K19
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 17; GLP1 | 8.3G; Chr 10; 102.4561 Mbp; LOD 6.0849; A/J..WSB -0.22 0.16
+    0.07 -0.05 0.02 0.09 -0.03 -0.05
+  trait: ins_GLP1_fc_8.3G
+  chr: '10'
+  pos_mb: 102.4561
+  lod: 6.0849
+  notes: 'Paper label ''GLP1 | 8.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: -0.22 0.16 0.07 -0.05 0.02 0.09 -0.03 -0.05.'
+- id: K20
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 25; GLP1 | 8.3G; Chr 14; 78.899 Mbp; LOD 7.0659; A/J..WSB 0.01 0.04 -0.07
+    -0.30 -0.02 0.24 -0.03 0.13
+  trait: ins_GLP1_fc_8.3G
+  chr: '14'
+  pos_mb: 78.899
+  lod: 7.0659
+  notes: 'Paper label ''GLP1 | 8.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.01 0.04 -0.07 -0.30 -0.02 0.24 -0.03 0.13.'
+- id: K21
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 26; KCl | 3.3G; Chr 16; 28.3788 Mbp; LOD 6.5976; A/J..WSB 0.13 0.05 -0.21
+    0.42 -0.06 -0.09 -0.10 -0.14
+  trait: ins_KCl_fc_3.3G
+  chr: '16'
+  pos_mb: 28.3788
+  lod: 6.5976
+  notes: 'Paper label ''KCl | 3.3G''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB) as
+    printed: 0.13 0.05 -0.21 0.42 -0.06 -0.09 -0.10 -0.14.'
+- id: K22
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 28; 8.3G | ins/islet; Chr 19; 4.9781 Mbp; LOD 6.3145; A/J..WSB -0.09
+    0.36 -0.04 -0.13 0.02 -0.41 0.08 0.21
+  trait: ins_8.3G_per_content
+  chr: '19'
+  pos_mb: 4.9781
+  lod: 6.3145
+  notes: 'Paper label ''8.3G | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: -0.09 0.36 -0.04 -0.13 0.02 -0.41 0.08 0.21.'
+- id: K23
+  kind: qtl_peak
+  source: Supplemental Table 1 (JCI129143.sdt1.xlsx, sha256 659b3128...d88e), sheet
+    'ex vivo islet QTL'
+  quote: QTL 28; GLP1 | ins/islet; Chr 19; 4.9781 Mbp; LOD 6.2827; A/J..WSB -0.08
+    0.33 -0.11 -0.09 0.03 -0.45 0.17 0.19
+  trait: ins_GLP1_per_content
+  chr: '19'
+  pos_mb: 4.9781
+  lod: 6.2827
+  notes: 'Paper label ''GLP1 | ins/islet''. Effects (A/J,B6,129,NOD,NZO,CAST,PWK,WSB)
+    as printed: -0.08 0.33 -0.11 -0.09 0.03 -0.45 0.17 0.19.'
+- id: K24
+  kind: qtl_peak
+  source: Results text, glucagon secretion section
+  quote: KCl-induced glucagon secretion QTL on Chr 19 at ~5 Mb, LOD 6.9 without conditioning
+    on glucagon content (7.0 with)
+  trait: gcg_KCl
+  chr: '19'
+  pos_mb: 5.0
+  pos_reported_precision_mb: 1.0
+  lod: 6.9
+  founders_high:
+  - PWK
+  founders_low:
+  - NZO
+  notes: Not in Supplemental Table 1. Uses the unconditioned value (6.9) on the raw
+    glucagon trait.
+- id: K25
+  kind: qtl_absent
+  source: Results text, interim analysis (Hunk)
+  quote: Chr 16 ~90.7 Mb GLP1-induced insulin secretion, LOD 7.4 at N = 300; 'At the
+    completion of our study (N = 500) support for these QTL fell below our suggestive
+    threshold'
+  trait: ins_GLP1
+  chr: '16'
+  pos_mb: 90.7
+  pos_reported_precision_mb: 0.1
+  notes: Expected null at full N. Consistent with Supplemental Table 1 (no Chr 16
+    ~90 Mb row). By chance alone a null can cross LOD 6.
+frozen:
+  by: Ethan (decision card, 2026-10-23T03:36Z)
+  at: '2026-10-23T03:38:26Z'
+  sha256: 20bfae0e35fc71f983828ce7a7abe33349d3581922e6b10bcbbb89660c13715a
