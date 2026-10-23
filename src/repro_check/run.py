@@ -65,6 +65,20 @@ def rscript() -> str:
     return exe
 
 
+# Library paths from the caller's environment would let a different R
+# installation's packages leak into the pinned one (CI runners set these).
+_R_ENV_DROP = ("R_LIBS", "R_LIBS_SITE", "R_LIBS_USER", "R_HOME", "R_ENVIRON", "R_ENVIRON_USER",
+               "R_PROFILE", "R_PROFILE_USER")
+
+
+def r_env() -> dict[str, str]:
+    env = {k: v for k, v in os.environ.items() if k not in _R_ENV_DROP}
+    env["R_LIBS_USER"] = os.devnull  # no user library
+    env["R_ENVIRON_USER"] = os.devnull
+    env["R_PROFILE_USER"] = os.devnull
+    return env
+
+
 def _resolve(value: Any, run_dir: Path, provenance: dict[str, Any]) -> Any:
     if isinstance(value, str) and value.startswith("input:"):
         name = value.removeprefix("input:")
@@ -104,7 +118,7 @@ def run(config: str | Path, run_dir: str | Path) -> Path:
     cfg_path.write_text(json.dumps(engine_cfg, indent=2))
     exe = rscript()
     proc = subprocess.run([exe, str(engine_dir() / "engine.R"), str(cfg_path)],
-                          capture_output=True, text=True)
+                          capture_output=True, text=True, env=r_env())
     (run_dir / "engine.log").write_text(proc.stdout + proc.stderr)
     if proc.returncode != 0:
         raise RunError(f"engine failed (exit {proc.returncode}); last lines:\n"
@@ -123,7 +137,7 @@ def run(config: str | Path, run_dir: str | Path) -> Path:
 def simulate(spec: str | Path, out_dir: str | Path) -> Path:
     out_dir = Path(out_dir)
     proc = subprocess.run([rscript(), str(engine_dir() / "simulate.R"), str(spec), str(out_dir)],
-                          capture_output=True, text=True)
+                          capture_output=True, text=True, env=r_env())
     if proc.returncode != 0:
         raise RunError("simulation failed:\n" + (proc.stdout + proc.stderr)[-2000:])
     return out_dir

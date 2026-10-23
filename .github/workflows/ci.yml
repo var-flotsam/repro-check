@@ -25,6 +25,9 @@ jobs:
           uv run python scripts/make_r_env.py .renv
           echo "$PWD/.renv/bin" >> "$GITHUB_PATH"
       - name: testthat
-        run: Rscript -e 'testthat::test_dir("r/tests/testthat", stop_on_failure = TRUE)'
+        # Drop the runner's R library paths so only the pinned env is used.
+        run: |
+          env -u R_LIBS -u R_LIBS_SITE -u R_HOME R_LIBS_USER=/dev/null R_ENVIRON_USER=/dev/null \
+            Rscript -e 'print(.libPaths()); testthat::test_dir("r/tests/testthat", stop_on_failure = TRUE)'
       - name: pytest including Stage A (synthetic data, no downloads)
         run: uv run pytest -q

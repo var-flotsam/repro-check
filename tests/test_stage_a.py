@@ -13,7 +13,7 @@ import yaml
 
 from repro_check import cli
 from repro_check.fetch import sha256_file
-from repro_check.run import rscript, RunError
+from repro_check.run import RunError, r_env, rscript
 
 EXAMPLE = Path(__file__).resolve().parents[1] / "examples" / "stage_a"
 
@@ -23,7 +23,7 @@ def _have_qtl2() -> bool:
         exe = rscript()
     except RunError:
         return False
-    return subprocess.run([exe, "-e", "library(qtl2)"], capture_output=True).returncode == 0
+    return subprocess.run([exe, "-e", "library(qtl2)"], capture_output=True, env=r_env()).returncode == 0
 
 
 pytestmark = [pytest.mark.r, pytest.mark.skipif(not _have_qtl2(), reason="Rscript with qtl2 not found")]
