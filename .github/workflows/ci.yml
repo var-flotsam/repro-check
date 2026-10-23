@@ -19,11 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
-      - name: pinned R environment (R 4.4.3, qtl2 0.46 from conda-forge)
+      - name: pinned R environment from the explicit lock (R 4.4.3, qtl2 0.46)
+        # The runner image ships conda; install exactly the locked packages.
         run: |
-          uv sync --locked --group dev --group renv
-          uv run python scripts/make_r_env.py .renv
+          "$CONDA/bin/conda" create --yes --quiet -p "$PWD/.renv" --file env/r-linux-64.lock
           echo "$PWD/.renv/bin" >> "$GITHUB_PATH"
+      - name: check R environment
+        run: |
+          env -u R_LIBS -u R_LIBS_SITE -u R_HOME R_LIBS_USER=/dev/null \
+            Rscript -e 'library(tools); library(qtl2); print(R.version.string); print(packageVersion("qtl2"))'
       - name: testthat
         # Drop the runner's R library paths so only the pinned env is used.
         run: |
