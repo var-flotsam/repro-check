@@ -63,7 +63,9 @@ def lod_allowance(claim: Claim) -> float:
 
 def _position_ok(claim: Claim, peak: Peak, half: float) -> bool:
     assert claim.pos_mb is not None
-    return abs(peak.pos - claim.pos_mb) <= half or peak.ci_lo <= claim.pos_mb <= peak.ci_hi
+    if abs(peak.pos - claim.pos_mb) <= half:
+        return True
+    return claim.tol("pos_ci") > 0 and peak.ci_lo <= claim.pos_mb <= peak.ci_hi
 
 
 def _ranked(coef: dict[str, float]) -> list[str]:
@@ -73,6 +75,10 @@ def _ranked(coef: dict[str, float]) -> list[str]:
 
 def pattern_check(claim: Claim, coef: dict[str, float]) -> Check:
     """One listed founder must be the extreme; several must all be in that half."""
+    if not set(FOUNDER_CODES) <= set(coef):
+        return Check("founder pattern", False, "founder pattern", "no founder effects at this peak",
+                     "needs the eight DO/CC founder effects A-H",
+                     f"effects available: {', '.join(sorted(coef))}")
     ranked = _ranked(coef)
     half = len(ranked) // 2
     problems = []
@@ -113,10 +119,11 @@ def _find_peak(claim: Claim, results: RunResults) -> tuple[Peak | None, list[Che
     observed: dict[str, Any] = {"window_mb": [lo, hi]}
     if window:
         observed["window_max_lod"], observed["window_max_pos"] = window
-    pos_tol = f"±{half:g} Mb, or claimed position inside the observed support interval"
+    pos_tol = f"±{half:g} {claim.units}" + (
+        ", or claimed position inside the observed support interval" if claim.tol("pos_ci") > 0 else "")
     if not candidates:
         checks = [
-            Check("position", False, f"chr {claim.chr} {claim.pos_mb:g} Mb", "no called peak in window",
+            Check("position", False, f"chr {claim.chr} {claim.pos_mb:g} {claim.units}", "no called peak in window",
                   pos_tol, f"max LOD in window {_fmt(window[0] if window else None)}"),
             Check("threshold", False, f"LOD ≥ {threshold:g}", _fmt(window[0] if window else None),
                   "paper's threshold"),
@@ -126,8 +133,8 @@ def _find_peak(claim: Claim, results: RunResults) -> tuple[Peak | None, list[Che
     observed.update({"chr": peak.chr, "pos": peak.pos, "lod": peak.lod,
                      "ci": [peak.ci_lo, peak.ci_hi], "marker": peak.marker, "coef": peak.coef})
     checks = [
-        Check("position", True, f"chr {claim.chr} {claim.pos_mb:g} Mb",
-              f"chr {peak.chr} {peak.pos:g} Mb (support {peak.ci_lo:g}–{peak.ci_hi:g})", pos_tol),
+        Check("position", True, f"chr {claim.chr} {claim.pos_mb:g} {claim.units}",
+              f"chr {peak.chr} {peak.pos:g} {claim.units} (support {peak.ci_lo:g}–{peak.ci_hi:g})", pos_tol),
         Check("threshold", peak.lod >= threshold, f"LOD ≥ {threshold:g}", _fmt(peak.lod),
               "paper's threshold"),
     ]
@@ -170,10 +177,10 @@ def _check_absent(claim: Claim, results: RunResults) -> Verdict:
     window = results.profile.window_max(claim.trait, claim.chr, lo, hi)
     if window is None:
         return Verdict(claim.id, claim.kind, NOT_CHECKABLE,
-                       reason=f"no markers on chr {claim.chr} between {lo:g} and {hi:g} Mb")
+                       reason=f"no markers on chr {claim.chr} between {lo:g} and {hi:g} {claim.units}")
     max_lod, max_pos = window
     check = Check("stays below threshold", max_lod < threshold, f"max LOD < {threshold:g}",
-                  f"{max_lod:.2f} at {max_pos:g} Mb", f"window ±{half:g} Mb")
+                  f"{max_lod:.2f} at {max_pos:g} {claim.units}", f"window ±{half:g} {claim.units}")
     return Verdict(claim.id, claim.kind, REPRODUCED if check.passed else NOT_REPRODUCED, [check],
                    {"window_mb": [lo, hi], "window_max_lod": max_lod, "window_max_pos": max_pos})
 
@@ -194,7 +201,23 @@ def _check_count(claim: Claim, results: RunResults) -> Verdict:
     return Verdict(claim.id, claim.kind, REPRODUCED if ok else NOT_REPRODUCED, [check], {"count": n})
 
 
+def _check_perm(claim: Claim, results: RunResults) -> Verdict:
+    assert claim.value is not None and claim.alpha is not None
+    key = f"alpha_{claim.alpha:g}"
+    thr = (results.permutation_thresholds or {}).get(claim.trait or "", {}).get(key)
+    if thr is None:
+        return Verdict(claim.id, claim.kind, NOT_CHECKABLE,
+                       reason=f"no permutation threshold at alpha {claim.alpha:g} for {claim.trait} "
+                              "(set n_perm and perm_alpha in run.yaml)")
+    allow = claim.tol("lod_abs")
+    ok = abs(thr - claim.value) <= allow
+    check = Check(f"permutation threshold (alpha {claim.alpha:g})", ok, f"{claim.value:g}", f"{thr:.2f}",
+                  f"±{allow:g}", f"difference {thr - claim.value:+.2f}")
+    return Verdict(claim.id, claim.kind, REPRODUCED if ok else NOT_REPRODUCED, [check], {"threshold": thr})
+
+
 _DISPATCH = {
+    "perm_threshold": _check_perm,
     "qtl_peak": _check_peak,
     "qtl_absent": _check_absent,
     "effect_pattern": _check_pattern,

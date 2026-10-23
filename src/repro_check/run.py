@@ -43,7 +43,7 @@ import yaml
 ENGINE_KEYS = {
     "genoprobs", "map", "pheno", "covar", "id_column", "traits", "addcovar", "covar_factors",
     "kinship", "report_threshold", "peakdrop", "ci_drop", "effects", "n_perm", "seed",
-    "subset", "chromosomes", "cores",
+    "subset", "chromosomes", "cores", "cross", "genoprob", "xcovar", "perm_alpha",
 }
 REPORT_KEYS = {"engine", "assumptions", "ambiguities", "description"}
 
@@ -95,9 +95,12 @@ def build_engine_config(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
         raise RunError(f"unknown run config key(s): {sorted(unknown)}")
     if cfg.get("engine", "qtl2") != "qtl2":
         raise RunError(f"unsupported engine {cfg.get('engine')!r}; only qtl2 exists so far")
-    for key in ("genoprobs", "map", "pheno", "traits"):
+    required = ("cross", "traits") if "cross" in cfg else ("genoprobs", "map", "pheno", "traits")
+    for key in required:
         if key not in cfg:
             raise RunError(f"run config needs {key!r}")
+    if "cross" in cfg and "genoprobs" in cfg:
+        raise RunError("give either 'cross' (raw qtl2 data) or 'genoprobs' + 'map', not both")
     if "seed" not in cfg:
         raise RunError("run config needs an explicit 'seed'")
     prov_path = run_dir / "provenance.json"

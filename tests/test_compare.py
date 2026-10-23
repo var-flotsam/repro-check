@@ -140,3 +140,42 @@ def test_tally_counts_every_verdict():
 def test_verdicts_are_deterministic(lod):
     r = results([peak(lod=lod)])
     assert compare_claim(claim(lod=8.0), r) == compare_claim(claim(lod=8.0), r)
+
+
+class TestSupportIntervalSwitch:
+    def test_pos_ci_zero_uses_distance_only(self):
+        c = claim(tolerance={"pos_ci": 0.0})
+        assert verdict(c, results([peak(pos=42.0, ci=(30.0, 45.0))])) == NOT_REPRODUCED
+        assert verdict(claim(), results([peak(pos=42.0, ci=(30.0, 45.0))])) == REPRODUCED
+
+
+class TestPermThreshold:
+    def _r(self, thr):
+        r = results([])
+        r.permutation_thresholds = {"t": {"alpha_0.05": thr, "alpha_0.2": 2.6}}
+        return r
+
+    def test_within_tolerance(self):
+        c = claim(kind="perm_threshold", value=3.46, alpha=0.05, tolerance={"lod_abs": 0.15})
+        assert verdict(c, self._r(3.55)) == REPRODUCED
+        assert verdict(c, self._r(3.70)) == NOT_REPRODUCED
+
+    def test_alpha_key_format(self):
+        c = claim(kind="perm_threshold", value=2.63, alpha=0.2, tolerance={"lod_abs": 0.15})
+        assert verdict(c, self._r(3.5)) == REPRODUCED
+
+    def test_missing_permutations_not_checkable(self):
+        c = claim(kind="perm_threshold", value=3.46, alpha=0.01)
+        assert verdict(c, self._r(3.5)) == NOT_CHECKABLE
+
+
+def test_pattern_claim_on_non_founder_cross_fails_with_reason():
+    v = compare_claim(claim(founders_high=["F"]), results([peak(c={"SS": 1.0, "SB": 0.0, "BB": -1.0})]))
+    assert v.verdict == PARTLY
+    assert "no founder effects" in v.checks[-1].observed
+
+
+def test_units_follow_the_paper():
+    c = claim(units="cM")
+    v = compare_claim(c, results([peak()]))
+    assert "cM" in v.checks[0].claimed

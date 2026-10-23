@@ -28,6 +28,9 @@ claims:
     notes: ""
 ```
 
+`paper.position_units` is `Mb` (default) or `cM`; `pos_mb` and the
+`pos_mb` tolerance are then read in those units.
+
 `freeze` adds a `frozen:` block (who, when, sha256). Do not write it by hand.
 
 Founders: A AJ, B B6, C 129, D NOD, E NZO, F CAST, G PWK, H WSB.
@@ -40,12 +43,14 @@ Founders: A AJ, B B6, C 129, D NOD, E NZO, F CAST, G PWK, H WSB.
 | `qtl_absent` | trait, chr, pos_mb | the highest LOD in the window stays below `threshold_lod` |
 | `effect_pattern` | trait, chr, pos_mb, founders | a peak is found as for `qtl_peak` and the founder pattern matches |
 | `count` | traits (list), value | peaks at or above `threshold_lod` across those traits is within `count_rel` of value |
+| `perm_threshold` | trait, alpha, value | the engine's permutation threshold at that alpha is within `lod_abs` of value (needs `n_perm` and `perm_alpha` in run.yaml) |
 
 ## Tolerances and their defaults
 
 | key | default | meaning |
 |---|---|---|
 | `pos_mb` | 5.0 | window half-width; the larger of this and `pos_reported_precision_mb` is used. A claimed position inside the observed support interval also passes |
+| `pos_ci` | 1 | 1: a claimed position inside the observed support interval also passes; 0: distance only (use 0 for the authors' own data and software) |
 | `lod_abs` | 1.0 | allowed LOD difference |
 | `lod_rel`, `lod_rel_above` | 0.15, 10 | for claimed LOD above 10, allow 15% instead |
 | `threshold_lod` | 6.0 | the paper's threshold; set it to what the paper used |

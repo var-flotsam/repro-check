@@ -1,0 +1,20 @@
+engine: qtl2
+description: R/qtl2 user guide, DOex example
+cross: input:doex
+genoprob: {map: gmap, error_prob: 0.002, alleleprobs: true, report_map: pmap}
+traits:
+  - {name: OF_immobile_pct, transform: none}
+addcovar: [Sex]
+kinship: loco
+report_threshold: 3
+ci_drop: 1.5
+effects: coef
+n_perm: 0
+seed: 20261023
+assumptions:
+  - Same steps as the user guide: calc_genoprob(error_prob=0.002) on gmap, genoprob_to_alleleprob, LOCO kinship from allele probabilities, sex as additive covariate.
+  - Peak position reported on the physical map (pmap, Mb) at the same markers, as the guide's max(out, DOex$pmap).
+  - Founder effects with scan1coef, as in the guide.
+ambiguities:
+  - The guide says the chr 2 locus is "mostly due to the NZO allele" but not in which direction, so no founder claim is checked.
+  - The guide gives no LOD for the chr 2 peak. The claim uses LOD 6 as the bar for a "strong peak"; that number is ours.

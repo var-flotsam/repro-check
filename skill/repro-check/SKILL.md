@@ -1,6 +1,7 @@
 ---
 name: repro-check
 description: Reruns a published mouse or human genetics analysis (QTL mapping with R/qtl2 for now) from public data in a pinned environment, and reports claim by claim whether the paper's results come back within tolerances fixed before the run. Use when someone asks to reproduce, replicate, re-check or verify results from a genetics paper, a QTL or eQTL scan, or Diversity Outbred mouse data.
+license: MIT
 compatibility: Needs Claude Code (or another surface with shell and network access), Python 3.11+ with uv, and the pinned R environment in env/. On the Claude API's code execution tool (no network, no installs) only the validate, compare and report steps can run, on results produced elsewhere.
 ---
 

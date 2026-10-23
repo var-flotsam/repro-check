@@ -19,12 +19,17 @@ import yaml
 
 from .founders import FOUNDER_CODES, normalise_founders
 
-KINDS = ("qtl_peak", "qtl_absent", "effect_pattern", "count")
+KINDS = ("qtl_peak", "qtl_absent", "effect_pattern", "count", "perm_threshold")
+UNITS = ("Mb", "cM")
 
 DEFAULT_TOLERANCE = {
     # Peak position: DO peaks are usually resolved to a few Mb, and genoprobs
     # builds and marker sets can move them by about that much.
     "pos_mb": 5.0,
+    # 1: a claimed position inside the observed support interval also passes.
+    # Set 0 when rerunning the authors' own data and software, where the
+    # position should match to the marker.
+    "pos_ci": 1.0,
     # LOD: genoprobs version, kinship and missing-data handling shift LOD by
     # around 1; for large peaks a relative band is fairer.
     "lod_abs": 1.0,
@@ -54,10 +59,12 @@ class Claim:
     pos_reported_precision_mb: float = 0.0
     lod: float | None = None
     value: float | None = None
+    alpha: float | None = None
     founders_high: list[str] = field(default_factory=list)
     founders_low: list[str] = field(default_factory=list)
     tolerance: dict[str, float] = field(default_factory=dict)
     notes: str = ""
+    units: str = "Mb"
 
     def tol(self, key: str) -> float:
         return float(self.tolerance.get(key, DEFAULT_TOLERANCE[key]))
@@ -87,7 +94,7 @@ def _founders(names: Any, where: str) -> list[str]:
         raise ClaimsError(str(e)) from e
 
 
-def _parse_claim(raw: dict[str, Any], index: int) -> Claim:
+def _parse_claim(raw: dict[str, Any], index: int, units: str = "Mb") -> Claim:
     where = f"claim #{index + 1}"
     _require(isinstance(raw, dict), f"{where}: must be a mapping")
     cid = raw.get("id")
@@ -98,7 +105,7 @@ def _parse_claim(raw: dict[str, Any], index: int) -> Claim:
     for key in ("source", "quote"):
         _require(isinstance(raw.get(key), str) and raw[key].strip(),
                  f"{where}: needs '{key}' (where in the paper, and the words it uses)")
-    known = set(Claim.__dataclass_fields__)
+    known = set(Claim.__dataclass_fields__) - {"units"}
     unknown = set(raw) - known
     _require(not unknown, f"{where}: unknown field(s) {sorted(unknown)}")
     tol = raw.get("tolerance") or {}
@@ -116,10 +123,12 @@ def _parse_claim(raw: dict[str, Any], index: int) -> Claim:
         pos_reported_precision_mb=float(raw.get("pos_reported_precision_mb") or 0.0),
         lod=None if raw.get("lod") is None else float(raw["lod"]),
         value=None if raw.get("value") is None else float(raw["value"]),
+        alpha=None if raw.get("alpha") is None else float(raw["alpha"]),
         founders_high=_founders(raw.get("founders_high"), where),
         founders_low=_founders(raw.get("founders_low"), where),
         tolerance={k: float(v) for k, v in tol.items()},
         notes=raw.get("notes") or "",
+        units=units,
     )
 
     if kind in ("qtl_peak", "qtl_absent", "effect_pattern"):
@@ -132,6 +141,10 @@ def _parse_claim(raw: dict[str, Any], index: int) -> Claim:
     if kind == "effect_pattern":
         _require(bool(claim.founders_high or claim.founders_low),
                  f"{where}: effect_pattern needs founders_high and/or founders_low")
+    if kind == "perm_threshold":
+        _require(bool(claim.trait), f"{where}: perm_threshold needs 'trait'")
+        _require(claim.value is not None, f"{where}: perm_threshold needs 'value' (the LOD threshold)")
+        _require(claim.alpha is not None and 0 < claim.alpha < 1, f"{where}: perm_threshold needs 'alpha' in (0, 1)")
     if kind == "count":
         _require(bool(claim.traits), f"{where}: count needs 'traits' (list)")
         _require(claim.value is not None, f"{where}: count needs 'value'")
@@ -148,7 +161,9 @@ def parse(data: dict[str, Any], path: Path | None = None) -> ClaimsFile:
     _require(isinstance(paper, dict) and paper.get("doi"), "claims file needs paper.doi")
     raw_claims = data.get("claims")
     _require(isinstance(raw_claims, list) and raw_claims, "claims file needs a non-empty 'claims' list")
-    claims = [_parse_claim(c, i) for i, c in enumerate(raw_claims)]
+    units = paper.get("position_units", "Mb")
+    _require(units in UNITS, f"paper.position_units must be one of {UNITS}, got {units!r}")
+    claims = [_parse_claim(c, i, units) for i, c in enumerate(raw_claims)]
     ids = [c.id for c in claims]
     dupes = sorted({i for i in ids if ids.count(i) > 1})
     _require(not dupes, f"duplicate claim id(s): {dupes}")

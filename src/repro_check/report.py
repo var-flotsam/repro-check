@@ -18,9 +18,11 @@ from .founders import label
 
 
 def _short(claim) -> str:
+    if claim.kind == "perm_threshold":
+        return f"{claim.trait}: LOD threshold {claim.value:g} at alpha {claim.alpha:g}"
     if claim.kind == "count":
         return f"{claim.value:g} QTL above LOD {claim.tol('threshold_lod'):g}"
-    where = f"chr {claim.chr} ~{claim.pos_mb:g} Mb"
+    where = f"chr {claim.chr} ~{claim.pos_mb:g} {claim.units}"
     if claim.kind == "qtl_absent":
         return f"{claim.trait}: no QTL at {where}"
     bits = [f"{claim.trait}: QTL at {where}"]
@@ -33,16 +35,18 @@ def _short(claim) -> str:
     return ", ".join(bits)
 
 
-def _observed(v: Verdict) -> str:
+def _observed(v: Verdict, units: str) -> str:
     o = v.observed
     if v.verdict == "not checkable":
         return v.reason
+    if "threshold" in o:
+        return f"{o['threshold']:.2f}"
     if "count" in o:
         return f"{o['count']}"
     if "lod" in o:
-        return f"chr {o['chr']} {o['pos']:g} Mb, LOD {o['lod']:.2f}"
+        return f"chr {o['chr']} {o['pos']:g} {units}, LOD {o['lod']:.2f}"
     if "window_max_lod" in o:
-        return f"max LOD {o['window_max_lod']:.2f} at {o['window_max_pos']:g} Mb"
+        return f"max LOD {o['window_max_lod']:.2f} at {o['window_max_pos']:g} {units}"
     return v.reason or "—"
 
 
@@ -80,7 +84,7 @@ def render(claims: ClaimsFile, verdicts: list[Verdict], run_dir: Path) -> str:
     out.append("|---|---|---|---|")
     for v in verdicts:
         c = by_id[v.claim_id]
-        out.append(f"| {c.id} | {_cell(_short(c))} | {_cell(_observed(v))} | **{v.verdict}** |")
+        out.append(f"| {c.id} | {_cell(_short(c))} | {_cell(_observed(v, c.units))} | **{v.verdict}** |")
     out.append("")
 
     out.append("## Claim details")

@@ -1,0 +1,16 @@
+# From the R/qtl2 user guide (gh-pages f39901f3), DOex section.
+paper:
+  doi: none (R/qtl2 user guide)
+  citation: Broman KW. R/qtl2 user guide, DOex example (kbroman.org/qtl2, gh-pages f39901f3)
+  position_units: Mb
+claims:
+  - id: D1
+    kind: qtl_peak
+    source: "user guide, 'There's a strong peak on chromosome 2' and peak_Mbp <- max(out, DOex$pmap)$pos"
+    quote: "The marker is at 96.8 Mbp."
+    trait: OF_immobile_pct
+    chr: "2"
+    pos_mb: 96.8
+    pos_reported_precision_mb: 0.05
+    tolerance: {pos_mb: 0.05, pos_ci: 0, threshold_lod: 6}
+    notes: "Printed rounded to 0.1 Mb; threshold 6 is our reading of 'strong peak' (see ambiguities)."

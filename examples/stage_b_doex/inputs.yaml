@@ -1,0 +1,8 @@
+# Stage B warm-up: DOex, a 3-chromosome subset of Recla et al. (2014)
+# Diversity Outbred data, from rqtl/qtl2data.
+inputs:
+  - name: doex
+    url: https://raw.githubusercontent.com/rqtl/qtl2data/8cfeb3caa7fb1bec1fdfb5ad1e36015a17b1d17e/DOex/DOex.zip
+    sha256: a2a29481aa7010e08233ccb2925ae0e1806f2e8d98fbf1aeb244c33f3878d4af
+    license: qtl2data (Recla et al. 2014 data via MPD Recla1)
+    citation: Recla JM et al. (2014) Mamm Genome 25:211-222; rqtl/qtl2data DOex

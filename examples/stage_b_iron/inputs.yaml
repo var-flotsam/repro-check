@@ -1,0 +1,8 @@
+# Stage B warm-up: the iron F2 intercross bundled with R/qtl2 (Grant et al.
+# 2006, Hepatology 44:174-185), as shipped in qtl2's GitHub repository.
+inputs:
+  - name: iron
+    url: https://raw.githubusercontent.com/kbroman/qtl2/3329fb52cdced4762c6f82b3b5e3c294382ad9ca/inst/extdata/iron.zip
+    sha256: 125d037dca211459946114891b8c2d98f71aa6925ebfb1472e9b46a88c3623b6
+    license: GPL-3 (qtl2 package data)
+    citation: Grant GR et al. (2006) Hepatology 44:174-185; R/qtl2 example data

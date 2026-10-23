@@ -81,15 +81,17 @@ peaks_with_effects <- function(scan, probs, pheno, kinship, addcovar, map,
     marker <- names(map[[chr]])[which.min(abs(map[[chr]] - pk$pos[i]))]
     pr <- probs[, chr]
     pr[[chr]] <- pr[[chr]][, , marker, drop = FALSE]
-    k <- if (is.list(kinship)) kinship[[chr]] else kinship
+    k <- if (is.null(kinship)) NULL else if (is.list(kinship)) kinship[[chr]] else kinship
     y <- pheno[, trait, drop = FALSE]
     eff <- if (effects == "blup") {
       scan1blup(pr, y, kinship = k, addcovar = addcovar)
     } else {
       scan1coef(pr, y, kinship = k, addcovar = addcovar)
     }
-    coef <- as.numeric(eff[1, names(FOUNDERS)])
-    names(coef) <- names(FOUNDERS)
+    # Allele (DO: A-H) or genotype (e.g. F2: SS, SB, BB) columns.
+    alleles <- intersect(colnames(eff), dimnames(probs[[chr]])[[2]])
+    coef <- as.numeric(eff[1, alleles])
+    names(coef) <- alleles
     out[[i]] <- list(trait = trait, chr = chr, pos = pk$pos[i], lod = pk$lod[i],
                      ci_lo = pk$ci_lo[i], ci_hi = pk$ci_hi[i], marker = marker,
                      coef = as.list(coef))

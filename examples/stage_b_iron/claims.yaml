@@ -1,0 +1,31 @@
+# Numbers printed in the R/qtl2 user guide (kbroman/qtl2 gh-pages commit
+# f39901f3, assets/vignettes/user_guide.html). Same data and same software, so
+# tolerances are tight: positions to within one 1-cM grid step, LOD to 0.01.
+paper:
+  doi: none (R/qtl2 user guide)
+  citation: Broman KW. R/qtl2 user guide, iron example (kbroman.org/qtl2, gh-pages f39901f3)
+  position_units: cM
+claims:
+  - {id: B1, kind: qtl_peak, source: "user guide, find_peaks(out, map, threshold=4, drop=1.5)", quote: "liver 2 56.8 4.9576 48.1 73.2",
+     trait: liver, chr: "2", pos_mb: 56.8, lod: 4.9576, tolerance: {pos_mb: 1, pos_ci: 0, lod_abs: 0.01, threshold_lod: 4}}
+  - {id: B2, kind: qtl_peak, source: "user guide, find_peaks table", quote: "liver 7 50.1 4.0508 13.1 53.6",
+     trait: liver, chr: "7", pos_mb: 50.1, lod: 4.0508, tolerance: {pos_mb: 1, pos_ci: 0, lod_abs: 0.01, threshold_lod: 4}}
+  - {id: B3, kind: qtl_peak, source: "user guide, find_peaks table", quote: "liver 16 28.6 7.6816 6.6 40.4",
+     trait: liver, chr: "16", pos_mb: 28.6, lod: 7.6816, tolerance: {pos_mb: 1, pos_ci: 0, lod_abs: 0.01, threshold_lod: 4}}
+  - {id: B4, kind: qtl_peak, source: "user guide, find_peaks table", quote: "spleen 8 13.6 4.3029 0.0 32.7",
+     trait: spleen, chr: "8", pos_mb: 13.6, lod: 4.3029, tolerance: {pos_mb: 1, pos_ci: 0, lod_abs: 0.01, threshold_lod: 4}}
+  - {id: B5, kind: qtl_peak, source: "user guide, find_peaks table", quote: "spleen 9 56.6 12.0632 53.6 61.2",
+     trait: spleen, chr: "9", pos_mb: 56.6, lod: 12.0632, tolerance: {pos_mb: 1, pos_ci: 0, lod_abs: 0.01, threshold_lod: 4}}
+  - {id: B6, kind: count, source: "user guide, find_peaks table", quote: "three liver rows above LOD 4",
+     traits: [liver], value: 3, tolerance: {threshold_lod: 4, count_rel: 0}}
+  - {id: B7, kind: count, source: "user guide, find_peaks table", quote: "two spleen rows above LOD 4",
+     traits: [spleen], value: 2, tolerance: {threshold_lod: 4, count_rel: 0}}
+  - {id: B8, kind: perm_threshold, source: "user guide, summary(operm, alpha=c(0.2, 0.05))", quote: "0.05 3.46 3.46",
+     trait: liver, alpha: 0.05, value: 3.46, tolerance: {lod_abs: 0.15},
+     notes: "1000 permutations; the Monte Carlo error of a 95th percentile is about 0.1 LOD"}
+  - {id: B9, kind: perm_threshold, source: "user guide, summary(operm)", quote: "0.05 3.46 3.46",
+     trait: spleen, alpha: 0.05, value: 3.46, tolerance: {lod_abs: 0.15}}
+  - {id: B10, kind: perm_threshold, source: "user guide, summary(operm, alpha=c(0.2, 0.05))", quote: "0.2 2.63 2.64",
+     trait: liver, alpha: 0.2, value: 2.63, tolerance: {lod_abs: 0.15}}
+  - {id: B11, kind: perm_threshold, source: "user guide, summary(operm, alpha=c(0.2, 0.05))", quote: "0.2 2.63 2.64",
+     trait: spleen, alpha: 0.2, value: 2.64, tolerance: {lod_abs: 0.15}}

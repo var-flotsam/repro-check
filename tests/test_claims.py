@@ -105,3 +105,21 @@ def test_hash_ignores_key_order_and_frozen_block():
     reordered = {"claims": GOOD["claims"], "paper": dict(reversed(list(GOOD["paper"].items())))}
     assert cm.content_hash(reordered) == a
     assert cm.content_hash({**GOOD, "frozen": {"sha256": "x"}}) == a
+
+
+def test_position_units():
+    import copy
+    d = copy.deepcopy(GOOD)
+    d["paper"]["position_units"] = "cM"
+    assert cm.parse(d).claims[0].units == "cM"
+    d["paper"]["position_units"] = "bp"
+    with pytest.raises(cm.ClaimsError, match="position_units"):
+        cm.parse(d)
+
+
+def test_perm_threshold_needs_alpha():
+    import copy
+    d = copy.deepcopy(GOOD)
+    d["claims"] = [{"id": "P", "kind": "perm_threshold", "source": "s", "quote": "q", "trait": "t", "value": 3.4}]
+    with pytest.raises(cm.ClaimsError, match="alpha"):
+        cm.parse(d)

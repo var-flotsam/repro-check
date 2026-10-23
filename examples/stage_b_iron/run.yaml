@@ -1,0 +1,21 @@
+engine: qtl2
+description: R/qtl2 user guide, iron example, scan without kinship
+cross: input:iron
+genoprob: {map: gmap, step: 1, error_prob: 0.002}
+xcovar: true
+traits:
+  - {name: liver, transform: none}
+  - {name: spleen, transform: none}
+kinship: none
+report_threshold: 3
+ci_drop: 1.5
+effects: coef
+n_perm: 1000
+perm_alpha: [0.2, 0.05]
+seed: 20261023
+assumptions:
+  - Same steps as the user guide: insert_pseudomarkers(gmap, step=1), calc_genoprob(error_prob=0.002), scan1 with Xcovar and no kinship.
+  - find_peaks with peakdrop=Inf (the guide's first table) and drop=1.5.
+  - Permutations use our seed, not the guide's (it sets none), so thresholds can differ by Monte Carlo error.
+ambiguities:
+  - The user guide was rendered with an earlier qtl2 release than 0.46; small numeric differences are possible.

@@ -21,8 +21,6 @@ cfg <- fromJSON(args[1], simplifyVector = TRUE, simplifyDataFrame = FALSE)
 dir.create(cfg[["out_dir"]], recursive = TRUE, showWarnings = FALSE)
 set.seed(cfg[["seed"]] %||% 1L)
 
-probs <- readRDS(cfg[["genoprobs"]])
-map <- readRDS(cfg[["map"]])
 id_col <- cfg[["id_column"]] %||% "id"
 read_table <- function(path) {
   df <- read.csv(path, stringsAsFactors = FALSE, check.names = FALSE)
@@ -30,8 +28,41 @@ read_table <- function(path) {
   rownames(df) <- df[[id_col]]
   df
 }
-pheno_df <- read_table(cfg[["pheno"]])
-covar_df <- if (!is.null(cfg[["covar"]])) read_table(cfg[["covar"]]) else pheno_df
+with_ids <- function(df) {
+  df <- as.data.frame(df, stringsAsFactors = FALSE, check.names = FALSE)
+  df[[id_col]] <- rownames(df)
+  df
+}
+
+xcovar <- NULL
+if (!is.null(cfg[["cross"]])) {
+  # Raw qtl2 cross (zip or yaml/json control file): compute probabilities here.
+  cross <- read_cross2(cfg[["cross"]], quiet = TRUE)
+  gp <- cfg[["genoprob"]] %||% list()
+  map_name <- gp[["map"]] %||% "gmap"
+  if (is.null(cross[[map_name]])) stop(sprintf("cross has no '%s'", map_name))
+  map <- cross[[map_name]]
+  if (!is.null(gp[["step"]]) && gp[["step"]] > 0) map <- insert_pseudomarkers(map, step = gp[["step"]])
+  probs <- calc_genoprob(cross, map, error_prob = gp[["error_prob"]] %||% 1e-4,
+                         map_function = gp[["map_function"]] %||% "haldane",
+                         cores = cfg[["cores"]] %||% 1L)
+  if (isTRUE(gp[["alleleprobs"]])) probs <- genoprob_to_alleleprob(probs)
+  # Optionally report positions on another map with the same markers
+  # (e.g. compute on gmap in cM, report on pmap in Mb).
+  if (!is.null(gp[["report_map"]])) {
+    if (!is.null(gp[["step"]]) && gp[["step"]] > 0) stop("report_map cannot be used with pseudomarkers (step)")
+    map <- cross[[gp[["report_map"]]]]
+  }
+  if (isTRUE(cfg[["xcovar"]])) xcovar <- get_x_covar(cross)
+  pheno_df <- if (!is.null(cfg[["pheno"]])) read_table(cfg[["pheno"]]) else with_ids(cross$pheno)
+  covar_df <- if (!is.null(cfg[["covar"]])) read_table(cfg[["covar"]]) else
+    if (!is.null(cross$covar)) with_ids(cross$covar) else pheno_df
+} else {
+  probs <- readRDS(cfg[["genoprobs"]])
+  map <- readRDS(cfg[["map"]])
+  pheno_df <- read_table(cfg[["pheno"]])
+  covar_df <- if (!is.null(cfg[["covar"]])) read_table(cfg[["covar"]]) else pheno_df
+}
 
 # Samples: present in genoprobs, phenotypes and covariates, optionally subset.
 ids <- Reduce(intersect, list(rownames(probs[[1]]), rownames(pheno_df), rownames(covar_df)))
@@ -69,11 +100,12 @@ for (t in traits) {
 
 addcovar <- build_addcovar(covar_df[ids, , drop = FALSE], cfg[["addcovar"]] %||% character(),
                            cfg[["covar_factors"]] %||% character())
+if (!is.null(xcovar)) xcovar <- xcovar[ids, , drop = FALSE]
 kinship_type <- cfg[["kinship"]] %||% "loco"
-kinship <- calc_kinship(probs, type = kinship_type, cores = cfg[["cores"]] %||% 1L)
-if (kinship_type == "none") kinship <- NULL
+kinship <- if (kinship_type == "none") NULL else
+  calc_kinship(probs, type = kinship_type, cores = cfg[["cores"]] %||% 1L)
 
-scan <- scan1(probs, pheno, kinship = kinship, addcovar = addcovar,
+scan <- scan1(probs, pheno, kinship = kinship, addcovar = addcovar, Xcovar = xcovar,
               cores = cfg[["cores"]] %||% 1L)
 
 peaks <- peaks_with_effects(scan, probs, pheno, kinship, addcovar, map,
@@ -85,11 +117,15 @@ peaks <- peaks_with_effects(scan, probs, pheno, kinship, addcovar, map,
 perm <- NULL
 if ((cfg[["n_perm"]] %||% 0) > 0) {
   set.seed(cfg[["seed"]] %||% 1L)
-  operm <- scan1perm(probs, pheno, kinship = kinship, addcovar = addcovar,
+  operm <- scan1perm(probs, pheno, kinship = kinship, addcovar = addcovar, Xcovar = xcovar,
                      n_perm = cfg[["n_perm"]], cores = cfg[["cores"]] %||% 1L)
-  thr <- summary(operm, alpha = c(0.05, 0.10))
-  perm <- lapply(colnames(pheno), function(tr) list(
-    alpha_0.05 = unname(thr["0.05", tr]), alpha_0.10 = unname(thr["0.1", tr])))
+  alphas <- as.numeric(cfg[["perm_alpha"]] %||% c(0.05, 0.10, 0.20))
+  thr <- unclass(summary(operm, alpha = alphas))
+  perm <- lapply(colnames(pheno), function(tr) {
+    vals <- as.list(unname(thr[, tr]))
+    names(vals) <- paste0("alpha_", as.character(alphas))
+    vals
+  })
   names(perm) <- colnames(pheno)
 }
 
