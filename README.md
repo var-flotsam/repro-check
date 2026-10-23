@@ -5,7 +5,7 @@ public data in a pinned environment and reports which results come back,
 using numeric tolerances fixed before the run. The model never decides
 agreement; `repro_check.compare` does.
 
-Work in progress (Phase 3 of 7). Design: [docs/design.md](docs/design.md).
+Work in progress (Phase 4 of 7). Design: [docs/design.md](docs/design.md).
 Status and open questions: [docs/HANDOFF.md](docs/HANDOFF.md).
 
 ## Layout
@@ -16,6 +16,8 @@ Status and open questions: [docs/HANDOFF.md](docs/HANDOFF.md).
 - `env/`: pinned R environment (R 4.4.3, qtl2 0.46, conda-forge lock)
 - `examples/stage_a/`: synthetic cross with planted QTL, expected nulls and
   deliberately false claims
+- `examples/stage_b_iron/`, `examples/stage_b_doex/`: R/qtl2 example data
+  warm-ups; reports in `docs/results/`
 - `tests/`, `r/tests/testthat/`: pytest and testthat
 
 ## Quick start
@@ -27,3 +29,12 @@ export PATH="$PWD/.renv/bin:$PATH"
 uv run pytest -q                  # unit tests + Stage A through R
 uv run bash examples/stage_a/run.sh   # writes runs/stage_a/report.md
 ```
+
+## Warm-up results (Phase 4)
+
+| Dataset | Claims | Reproduced | Not reproduced |
+|---|---|---|---|
+| qtl2 `iron` F2 (R/qtl2 user guide) | 11 | 10 | 1 (B8: liver permutation threshold 3.30 vs 3.46, tolerance ±0.15) |
+| qtl2data `DOex` | 1 | 1 | 0 |
+
+Full reports: [iron](docs/results/stage_b_iron.md), [DOex](docs/results/stage_b_doex.md).

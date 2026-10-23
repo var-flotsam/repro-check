@@ -24,4 +24,4 @@ packages = ["src/repro_check"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-markers = ["r: needs Rscript with qtl2 (pinned env)"]
+markers = ["r: needs Rscript with qtl2 (pinned env)", "network: downloads pinned public inputs"]

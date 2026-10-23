@@ -1,6 +1,6 @@
 # HANDOFF
 
-Last updated: 2026-10-23, end of Phase 3.
+Last updated: 2026-10-23, end of Phase 4.
 
 ## Project
 
@@ -26,10 +26,12 @@ within tolerances set before the run. Flagship: Keller et al. 2019 JCI
 | 1. Docs, prior art, data availability | Done. Owner approved the Stage C target (2026-10-22) |
 | 2. design.md | Approved by owner 2026-10-23 (section 10 points taken at their defaults, see below) |
 | 3. Synthetic tests and skeleton | Done |
-| 4–7 | Not started |
+| 4. R/qtl2 warm-up | Done: iron 10/11 reproduced, DOex 1/1 reproduced (see below) |
+| 5–7 | Not started |
 
 Repository: https://github.com/var-flotsam/repro-check (branch `main`).
-Phases 1–2 were pushed 2026-10-22 with the owner's OK.
+Phases 1–2 were pushed 2026-10-22 with the owner's OK; the owner later approved
+pushing each phase to this repo ("yes to all"). Licence: MIT (owner, 2026-10-23).
 
 ## Phase 1 outputs
 
@@ -74,6 +76,30 @@ Phases 1–2 were pushed 2026-10-22 with the owner's OK.
 - `skill/repro-check/SKILL.md` + `reference/claims.md`, `reference/qtl2.md`.
 - CI: `.github/workflows/ci.yml` (unit tests; R + Stage A).
 
+## Phase 4 outputs
+
+- Engine can now build genoprobs from a raw qtl2 cross (`cross`, `genoprob`,
+  `xcovar`), report on another map (`report_map`), and compute permutation
+  thresholds (`n_perm`, `perm_alpha`); new claim kind `perm_threshold`;
+  `paper.position_units` (Mb or cM); tolerance `pos_ci` (0 = position must
+  match by distance only).
+- `examples/stage_b_iron/` (qtl2 `iron` F2 at kbroman/qtl2@3329fb52, claims
+  B1–B11 from the R/qtl2 user guide) and `examples/stage_b_doex/` (DOex at
+  rqtl/qtl2data@8cfeb3ca, claim D1). Claims confirmed by the owner via a
+  decision card and frozen 2026-10-23T01:41Z.
+- Reports: `docs/results/stage_b_iron.md`, `docs/results/stage_b_doex.md`
+  (with the frozen claims files beside them).
+- Results: all five iron peaks and both counts reproduced to the marker; three
+  of four permutation thresholds reproduced. **B8** (liver, alpha 0.05) came
+  back 3.30 vs 3.46, outside ±0.15, so it is *not reproduced*. Left as
+  recorded: tolerances are never changed after freezing. DOex D1 reproduced
+  (chr 2 96.84 Mb, LOD 10.97).
+- Lesson: ±0.15 LOD is tighter than the Monte Carlo spread of a 1000-permutation
+  alpha 0.05 quantile. For future perm claims use about ±0.25, or base the
+  tolerance on the permutation count.
+- `tests/test_stage_b.py` (markers `r` and `network`) reruns both warm-ups
+  without permutations. 71 pytest pass locally.
+
 ## Decisions taken without an explicit answer
 
 Design section 10 was approved as a whole, so: default tolerances as
@@ -91,9 +117,12 @@ claims are drafted.
 - A null-trait sim showed 1 of 20 noise traits crossing LOD 6 on a small
   genome: expected nulls can fail by chance. Keep this in mind for the
   Hunk/Zfp148 absence claims and say it in the report.
-- Phase 4 (R/qtl2 warm-up) can use qtl2's bundled `iron` data (offline);
-  DO example data from qtl2data is on GitHub (reachable).
+- Phase 5 (Keller 2019) needs jax.org/box.com/phenome.jax.org/cloudfront.net.
+  Run it from a session on the new environment or on the owner's machine.
+  Draft claims from docs/phase1/keller2019-data-availability.md, offer the
+  optional N = 300 interim scan, and get the owner's confirmation before
+  freezing.
 
 ## Open questions for the owner
 
-None blocking. Ask before Phase 4 only if the warm-up target changes.
+Where Phase 5 should run (new cloud environment or the owner's machine).
