@@ -1,6 +1,6 @@
 # HANDOFF
 
-Last updated: 2026-10-22, Phase 2 drafted.
+Last updated: 2026-10-23, end of Phase 3.
 
 ## Project
 
@@ -24,8 +24,9 @@ within tolerances set before the run. Flagship: Keller et al. 2019 JCI
 | Phase | State |
 |---|---|
 | 1. Docs, prior art, data availability | Done. Owner approved the Stage C target (2026-10-22) |
-| 2. design.md | Drafted and committed; **awaiting owner approval** |
-| 3–7 | Not started |
+| 2. design.md | Approved by owner 2026-10-23 (section 10 points taken at their defaults, see below) |
+| 3. Synthetic tests and skeleton | Done |
+| 4–7 | Not started |
 
 Repository: https://github.com/var-flotsam/repro-check (branch `main`).
 Phases 1–2 were pushed 2026-10-22 with the owner's OK.
@@ -59,8 +60,35 @@ Phases 1–2 were pushed 2026-10-22 with the owner's OK.
   allowing these hosts). It applies only to new sessions: the Phase 1–2 session
   still could not reach them at 23:59 UTC. Run Phase 4–5 data fetches from a
   thread started on the new environment.
-- R is not installed; plan to use conda-forge `r-qtl2` or a rocker image.
+
+## Phase 3 outputs
+
+- Python package `repro_check` (uv-locked): `claims.py` (schema, freeze, hash),
+  `compare.py` (all verdict logic), `fetch.py` (manifest, sha256),
+  `run.py` (calls R), `report.py`, `cli.py`.
+- R engine `src/repro_check/engines/qtl2/{lib,engine,simulate}.R`.
+- R env: `env/r-environment.yml` (exact pins) and `env/r-linux-64.lock`;
+  `scripts/make_r_env.py PREFIX` installs it with py-rattler (no conda needed).
+- Stage A: `examples/stage_a/` — S1–S3 planted QTL reproduced, S4–S5 nulls
+  held, S6–S7 false claims rejected. 61 pytest + 15 testthat checks pass.
+- `skill/repro-check/SKILL.md` + `reference/claims.md`, `reference/qtl2.md`.
+- CI: `.github/workflows/ci.yml` (unit tests; R + Stage A).
+
+## Decisions taken without an explicit answer
+
+Design section 10 was approved as a whole, so: default tolerances as
+drafted; skill name kept as `repro-check`; the N = 300 interim scan
+(waves 1–3) is not yet included and will be offered as optional when Phase 5
+claims are drafted.
+
+## Notes for the next phase
+
+- A null-trait sim showed 1 of 20 noise traits crossing LOD 6 on a small
+  genome: expected nulls can fail by chance. Keep this in mind for the
+  Hunk/Zfp148 absence claims and say it in the report.
+- Phase 4 (R/qtl2 warm-up) can use qtl2's bundled `iron` data (offline);
+  DO example data from qtl2data is on GitHub (reachable).
 
 ## Open questions for the owner
 
-1. Approve docs/design.md (and its section 10 points).
+None blocking. Ask before Phase 4 only if the warm-up target changes.

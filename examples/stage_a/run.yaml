@@ -1,0 +1,23 @@
+engine: qtl2
+description: Stage A synthetic cross with planted QTL (see spec.json)
+genoprobs: input:genoprobs
+map: input:map
+pheno: input:pheno
+id_column: id
+traits:
+  - {name: trait_cast_high, transform: none}
+  - {name: trait_positive, transform: log}
+  - {name: trait_null, transform: none}
+  - {name: gene_eqtl, transform: rankz}
+addcovar: [sex, wave]
+covar_factors: [wave]
+kinship: loco
+report_threshold: 3
+peakdrop: 1.5
+ci_drop: 1.5
+effects: blup
+n_perm: 0
+seed: 20261023
+assumptions:
+  - Simulated data; planted QTL positions and founder effects are in sim/truth.json.
+ambiguities: []

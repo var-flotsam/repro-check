@@ -1,0 +1,63 @@
+# Known answers planted by spec.json. S1-S3 should be reproduced, S4-S5 are
+# expected nulls, and S6-S7 are deliberately false claims that must come back
+# "not reproduced".
+paper:
+  doi: synthetic/stage-a
+  citation: Stage A synthetic cross (spec.json, seed 20261023)
+claims:
+  - id: S1
+    kind: qtl_peak
+    source: spec.json traits[0]
+    quote: "chr 2, 40 Mb, CAST effect +2"
+    trait: trait_cast_high
+    chr: "2"
+    pos_mb: 40
+    founders_high: [CAST]
+  - id: S2
+    kind: qtl_peak
+    source: spec.json traits[1]
+    quote: "chr 3, 70 Mb, NOD and WSB +1.5, CAST and PWK -1.5"
+    trait: trait_positive
+    chr: "3"
+    pos_mb: 70
+    founders_high: [NOD, WSB]
+    founders_low: [CAST, PWK]
+  - id: S3
+    kind: qtl_peak
+    source: spec.json genes[0]
+    quote: "local eQTL, chr 1, 20 Mb, A/J effect +1 on log mean"
+    trait: gene_eqtl
+    chr: "1"
+    pos_mb: 20
+    founders_high: [AJ]
+  - id: S4
+    kind: qtl_absent
+    source: spec.json traits[2]
+    quote: "null trait, no QTL"
+    trait: trait_null
+    chr: "1"
+    pos_mb: 50
+    tolerance: {pos_mb: 50}
+  - id: S5
+    kind: qtl_absent
+    source: spec.json traits[0]
+    quote: "no QTL planted on chr 4"
+    trait: trait_cast_high
+    chr: "4"
+    pos_mb: 50
+    tolerance: {pos_mb: 50}
+  - id: S6
+    kind: qtl_peak
+    source: deliberately false
+    quote: "a QTL for the null trait on chr 2 at 40 Mb"
+    trait: trait_null
+    chr: "2"
+    pos_mb: 40
+  - id: S7
+    kind: effect_pattern
+    source: deliberately false
+    quote: "CAST is the low allele at the chr 2 QTL"
+    trait: trait_cast_high
+    chr: "2"
+    pos_mb: 40
+    founders_low: [CAST]

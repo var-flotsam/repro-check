@@ -1,0 +1,12 @@
+# R environment for the R/qtl2 engine. Exact pins; the solved, hashed
+# package list for linux-64 is in r-linux-64.lock (regenerate with
+# scripts/make_r_env.py --lock).
+name: repro-check-r
+channels:
+  - conda-forge
+dependencies:
+  - r-base=4.4.3
+  - r-qtl2=0.46
+  - r-testthat=3.3.2
+  - r-jsonlite=2.0.0
+  - r-yaml=2.3.12

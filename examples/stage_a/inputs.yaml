@@ -1,0 +1,5 @@
+# Stage A inputs: synthetic data made by `repro-check simulate spec.json sim`.
+inputs:
+  - {name: genoprobs, url: sim/genoprobs.rds, license: synthetic}
+  - {name: map, url: sim/map.rds, license: synthetic}
+  - {name: pheno, url: sim/pheno.csv, license: synthetic}
