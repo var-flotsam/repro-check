@@ -54,7 +54,8 @@ def _cell(text: str) -> str:
     return str(text).replace("|", "\\|").replace("\n", " ")
 
 
-def render(claims: ClaimsFile, verdicts: list[Verdict], run_dir: Path) -> str:
+def render(claims: ClaimsFile, verdicts: list[Verdict], run_dir: Path,
+           figures_file: ClaimsFile | None = None) -> str:
     by_id = claims.by_id()
     prov = _read_json(run_dir / "provenance.json") or {"inputs": {}}
     env = _read_json(run_dir / "environment.json") or {}
@@ -113,6 +114,8 @@ def render(claims: ClaimsFile, verdicts: list[Verdict], run_dir: Path) -> str:
             out.append(f"Notes: {c.notes}")
         out.append("")
 
+    out.extend(_figures_section(claims, run_dir, figures_file))
+
     out.append("## Assumptions")
     out.append("")
     assumptions = list(run_cfg.get("assumptions") or [])
@@ -155,6 +158,39 @@ def render(claims: ClaimsFile, verdicts: list[Verdict], run_dir: Path) -> str:
     out.extend(f"- {a}" for a in amb) if amb else out.append("None recorded.")
     out.append("")
     return "\n".join(out)
+
+
+FIGURE_KINDS = {"genome_scan": "genome scan", "lod_chr": "LOD curve", "allele_effects": "founder effects",
+                "peak_map": "peak map"}
+FIGURE_NOTE = ("Each figure below is redrawn from this run's numbers so it can be set beside the "
+               "paper's figure. Figures get no verdict: any number a figure shows is checked "
+               "only through the claims above. The paper's own images are not copied here.")
+
+
+def _figures_section(claims: ClaimsFile, run_dir: Path, figures_file: ClaimsFile | None) -> list[str]:
+    figures = figures_file.figures if figures_file else claims.figures
+    if not figures:
+        return []
+    drawn = {f["id"]: f for f in (_read_json(run_dir / "figures" / "index.json") or [])}
+    cited = {f.id: [c.id for c in claims.claims if f.source.lower() in c.source.lower()] for f in figures}
+    out = ["## Figures", "", FIGURE_NOTE, ""]
+    if figures_file:
+        fz = figures_file.frozen or {}
+        out += [f"Figures declared in a separate file, frozen by {fz.get('by', '—')} at {fz.get('at', '—')}, "
+                f"sha256 `{fz.get('sha256', '—')}`."]
+        if figures_file.paper.get("notes"):
+            out += [figures_file.paper["notes"]]
+        out += [""]
+    out += ["| Figure | Paper | What is drawn | File | Claims citing this figure |", "|---|---|---|---|---|"]
+    for f in figures:
+        what = FIGURE_KINDS[f.kind] + (f", chr {f.chr}" if f.chr else "") + \
+            (f" {f.region[0]:g}–{f.region[1]:g} {claims.paper.get('position_units', 'Mb')}" if f.region else "") + \
+            (f": {', '.join(f.traits)}" if f.traits else "")
+        paper = f"[{f.source}]({f.url})" if f.url else f.source
+        file = f"`figures/{drawn[f.id]['png']}`" if f.id in drawn else "not drawn"
+        out.append(f"| {f.id} | {_cell(paper)} | {_cell(what)} | {file} | {', '.join(cited[f.id]) or '—'} |")
+    out.append("")
+    return out
 
 
 def _read_json(path: Path) -> Any:

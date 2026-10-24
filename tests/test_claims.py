@@ -136,3 +136,47 @@ def test_package_reads_and_writes_text_as_utf8():
            for n, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1)
            if re.search(r"\.(read|write)_text\(", line) and 'encoding="utf-8"' not in line]
     assert not bad, bad
+
+
+def _base():
+    return {"paper": {"doi": "x"},
+            "claims": [{"id": "A", "kind": "count", "source": "s", "quote": "q", "traits": ["t"], "value": 1}]}
+
+
+def test_figures_parse_and_validate():
+    from repro_check.claims import ClaimsError, parse
+    d = _base()
+    d["figures"] = [{"id": "F1", "kind": "allele_effects", "source": "Figure 3B", "traits": ["t"], "chr": 1,
+                     "region": [20, 50]}]
+    cf = parse(d)
+    assert cf.figures[0].chr == "1" and cf.figures[0].region == [20.0, 50.0]
+    for bad in ({"kind": "allele_effects", "traits": ["t", "u"], "chr": "1"},
+                {"kind": "lod_chr", "traits": ["t"]},
+                {"kind": "genome_scan", "traits": []},
+                {"kind": "genome_scan", "traits": ["t"], "chr": "1"},
+                {"kind": "pie", "traits": ["t"]},
+                {"kind": "lod_chr", "traits": ["t"], "chr": "1", "region": [5, 1]}):
+        d["figures"] = [{"id": "F1", "source": "Fig 1", **bad}]
+        with pytest.raises(ClaimsError):
+            parse(d)
+    d["figures"] = [{"id": "A", "kind": "peak_map", "source": "Fig 1"}]
+    with pytest.raises(ClaimsError, match="duplicate"):
+        parse(d)
+
+
+def test_figures_are_hashed_but_old_files_keep_their_hash():
+    from repro_check.claims import content_hash
+    d = _base()
+    h0 = content_hash(d)
+    d["figures"] = []
+    assert content_hash(d) == h0
+    d["figures"] = [{"id": "F1", "kind": "peak_map", "source": "Fig 1"}]
+    assert content_hash(d) != h0
+
+
+def test_figures_only_file_is_allowed():
+    from repro_check.claims import ClaimsError, parse
+    cf = parse({"paper": {"doi": "x"}, "figures": [{"id": "F1", "kind": "peak_map", "source": "Fig 2B"}]})
+    assert cf.claims == [] and len(cf.figures) == 1
+    with pytest.raises(ClaimsError):
+        parse({"paper": {"doi": "x"}})

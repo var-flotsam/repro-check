@@ -1,12 +1,13 @@
-"""Command line: repro-check {validate,freeze,fetch,run,compare,report,simulate}.
+"""Command line: repro-check {validate,freeze,fetch,run,compare,figures,report,simulate}.
 
 Typical run, each step reading the previous step's files in RUN/:
 
     repro-check validate claims.yaml
     repro-check freeze claims.yaml --by "Name"      # after the user confirms
     repro-check fetch inputs.yaml --run RUN
-    repro-check run run.yaml --run RUN
+    repro-check run run.yaml --run RUN --claims claims.yaml
     repro-check compare claims.yaml --run RUN
+    repro-check figures claims.yaml --run RUN      # if the claims declare figures
     repro-check report claims.yaml --run RUN
 """
 
@@ -46,8 +47,16 @@ def _fetch(a) -> int:
     return 0
 
 
+def _figures_of(a) -> list:
+    """Figures from a separate frozen figures file if given, else from the claims file."""
+    if getattr(a, "figures", None):
+        return claims_mod.load_frozen(a.figures).figures
+    return claims_mod.load_frozen(a.claims).figures if a.claims else []
+
+
 def _run(a) -> int:
-    out = run_mod.run(a.config, a.run)
+    figures = _figures_of(a)
+    out = run_mod.run(a.config, a.run, figures)
     print(f"engine output in {out}")
     return 0
 
@@ -66,6 +75,18 @@ def _compare(a) -> int:
     return 0
 
 
+def _figures(a) -> int:
+    cf = claims_mod.load_frozen(a.claims)
+    figures = _figures_of(a)
+    if not figures:
+        print("no figures declared")
+        return 0
+    units = cf.paper.get("position_units", "Mb")
+    out = run_mod.draw_figures(figures, a.run, units, claims_mod.DEFAULT_TOLERANCE["threshold_lod"])
+    print(f"figures in {out}")
+    return 0
+
+
 def _report(a) -> int:
     cf = claims_mod.load_frozen(a.claims)
     run_dir = Path(a.run)
@@ -76,7 +97,8 @@ def _report(a) -> int:
         compare_mod.Verdict(**{**v, "checks": [compare_mod.Check(**c) for c in v["checks"]]})
         for v in payload["verdicts"]
     ]
-    text = report_mod.render(cf, verdicts, run_dir)
+    figfile = claims_mod.load_frozen(a.figures) if a.figures else None
+    text = report_mod.render(cf, verdicts, run_dir, figfile)
     out = Path(a.out) if a.out else run_dir / "report.md"
     out.write_text(text, encoding="utf-8")
     print(f"wrote {out}")
@@ -107,15 +129,23 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("run", help="run the engine")
     p.add_argument("config")
     p.add_argument("--run", required=True)
+    p.add_argument("--claims", help="frozen claims file; its allele_effects figures add effect regions")
+    p.add_argument("--figures", help="separate frozen figures file (overrides figures in --claims)")
     p.set_defaults(func=_run)
     p = sub.add_parser("compare", help="compute verdicts")
     p.add_argument("claims")
     p.add_argument("--run", required=True)
     p.set_defaults(func=_compare)
+    p = sub.add_parser("figures", help="redraw the declared paper figures (no verdicts)")
+    p.add_argument("claims")
+    p.add_argument("--run", required=True)
+    p.add_argument("--figures", help="separate frozen figures file")
+    p.set_defaults(func=_figures)
     p = sub.add_parser("report", help="write the Markdown report")
     p.add_argument("claims")
     p.add_argument("--run", required=True)
     p.add_argument("--out")
+    p.add_argument("--figures", help="separate frozen figures file")
     p.set_defaults(func=_report)
     p = sub.add_parser("simulate", help="make synthetic data with planted QTL")
     p.add_argument("spec")

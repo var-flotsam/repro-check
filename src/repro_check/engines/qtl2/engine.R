@@ -114,6 +114,28 @@ peaks <- peaks_with_effects(scan, probs, pheno, kinship, addcovar, map,
                             drop = cfg[["ci_drop"]] %||% 1.5,
                             effects = cfg[["effects"]] %||% "blup")
 
+# Founder effects along a region, for allele_effects figures. Not used by any verdict.
+for (reg in cfg[["effect_regions"]] %||% list()) {
+  chr <- as.character(reg[["chr"]])
+  if (!chr %in% names(map)) stop(sprintf("effect region %s: chromosome %s not scanned", reg[["id"]], chr))
+  pos <- map[[chr]]
+  keep <- pos >= (reg[["lo"]] %||% -Inf) & pos <= (reg[["hi"]] %||% Inf)
+  if (!any(keep)) stop(sprintf("effect region %s: no markers in range", reg[["id"]]))
+  pr <- probs[, chr]
+  pr[[chr]] <- pr[[chr]][, , names(pos)[keep], drop = FALSE]
+  k <- if (is.null(kinship)) NULL else if (is.list(kinship)) kinship[[chr]] else kinship
+  y <- pheno[, reg[["trait"]], drop = FALSE]
+  eff <- if ((cfg[["effects"]] %||% "blup") == "blup") {
+    scan1blup(pr, y, kinship = k, addcovar = addcovar, cores = cfg[["cores"]] %||% 1L)
+  } else {
+    scan1coef(pr, y, kinship = k, addcovar = addcovar)
+  }
+  alleles <- intersect(colnames(eff), dimnames(probs[[chr]])[[2]])
+  df <- data.frame(marker = rownames(eff), pos = pos[rownames(eff)], eff[, alleles, drop = FALSE],
+                   check.names = FALSE)
+  write.csv(df, file.path(cfg[["out_dir"]], sprintf("effects_%s.csv", reg[["id"]])), row.names = FALSE)
+}
+
 perm <- NULL
 if ((cfg[["n_perm"]] %||% 0) > 0) {
   set.seed(cfg[["seed"]] %||% 1L)

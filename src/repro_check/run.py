@@ -44,6 +44,7 @@ ENGINE_KEYS = {
     "genoprobs", "map", "pheno", "covar", "id_column", "traits", "addcovar", "covar_factors",
     "kinship", "report_threshold", "peakdrop", "ci_drop", "effects", "n_perm", "seed",
     "subset", "chromosomes", "cores", "cross", "genoprob", "xcovar", "perm_alpha",
+    "effect_regions",
 }
 REPORT_KEYS = {"engine", "assumptions", "ambiguities", "description"}
 
@@ -116,12 +117,26 @@ def build_engine_config(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     return out
 
 
-def run(config: str | Path, run_dir: str | Path) -> Path:
+def effect_regions(figures: list[Any]) -> list[dict[str, Any]]:
+    """Founder effects the engine must compute along a region for allele_effects figures."""
+    out = []
+    for f in figures:
+        if f.kind != "allele_effects":
+            continue
+        lo, hi = f.region if f.region else (None, None)
+        out.append({"id": f.id, "trait": f.traits[0], "chr": f.chr, "lo": lo, "hi": hi})
+    return out
+
+
+def run(config: str | Path, run_dir: str | Path, figures: list[Any] | None = None) -> Path:
     config = Path(config)
     run_dir = Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
     cfg = yaml.safe_load(config.read_text(encoding="utf-8")) or {}
     engine_cfg = build_engine_config(cfg, run_dir)
+    regions = effect_regions(figures or [])
+    if regions:
+        engine_cfg["effect_regions"] = regions
     (run_dir / "run_config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
     cfg_path = run_dir / "engine_config.json"
     cfg_path.write_text(json.dumps(engine_cfg, indent=2), encoding="utf-8")
@@ -141,6 +156,25 @@ def run(config: str | Path, run_dir: str | Path) -> Path:
     }
     (run_dir / "environment.json").write_text(json.dumps(env, indent=2), encoding="utf-8")
     return run_dir / "engine"
+
+
+def draw_figures(figures: list[Any], run_dir: str | Path, units: str = "Mb",
+                 default_threshold: float = 6.0) -> Path:
+    """Redraw the declared figures from this run's engine output (no verdicts)."""
+    run_dir = Path(run_dir)
+    out = run_dir / "figures"
+    out.mkdir(parents=True, exist_ok=True)
+    spec = {"engine_dir": str((run_dir / "engine").resolve()), "out_dir": str(out.resolve()),
+            "units": units, "default_threshold": default_threshold,
+            "figures": [f.to_dict() for f in figures]}
+    spec_path = out / "figures_spec.json"
+    spec_path.write_text(json.dumps(spec, indent=2), encoding="utf-8")
+    proc = subprocess.run([rscript(), str(engine_dir() / "figures.R"), str(spec_path)],
+                          capture_output=True, text=True, env=r_env())
+    (out / "figures.log").write_text(proc.stdout + proc.stderr, encoding="utf-8")
+    if proc.returncode != 0:
+        raise RunError("figures failed:\n" + (proc.stdout + proc.stderr)[-2000:])
+    return out
 
 
 def simulate(spec: str | Path, out_dir: str | Path) -> Path:

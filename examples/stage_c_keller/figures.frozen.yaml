@@ -1,0 +1,78 @@
+paper:
+  doi: 10.1172/JCI129143
+  citation: Keller MP et al. J Clin Invest 2019;129(10):4419-4432
+  position_units: Mb
+  notes: 'Declared after the claims run (post hoc), when figure redrawing was added
+    to the design. Not redrawn: Fig 1 (phenotype heat map), Fig 2A (islet hormone
+    content, not mapped here), Fig 2D (QTL counts per 4 Mb), Fig 3C (SNP association),
+    the Ptpn18 eQTL curves in Fig 3A-B (no expression data in this run), and Figs
+    4-7 (knockout physiology and GWAS enrichment).'
+figures:
+- id: F2B
+  kind: peak_map
+  source: Figure 2B
+  url: https://jci.org/articles/view/129143
+  traits:
+  - ins_3.3G
+  - ins_16.7G
+  - ins_GLP1
+  - ins_AA
+  - ins_PA
+  - ins_8.3G_fc_3.3G
+  - ins_16.7G_fc_3.3G
+  - ins_KCl_fc_3.3G
+  - ins_GLP1_fc_3.3G
+  - ins_AA_fc_3.3G
+  - ins_PA_fc_3.3G
+  - ins_GLP1_fc_8.3G
+  - ins_3.3G_per_content
+  - ins_8.3G_per_content
+  - ins_16.7G_per_content
+  - ins_GLP1_per_content
+  - ins_AA_per_content
+  - ins_PA_per_content
+  thresholds:
+  - 6
+  notes: 'Paper: genome-wide map of insulin secretion QTL with LOD >= 6 (n = 479).
+    Only the traits mapped in this run are drawn.'
+- id: F2C
+  kind: genome_scan
+  source: Figure 2C
+  url: https://jci.org/articles/view/129143
+  traits:
+  - gcg_KCl
+  thresholds:
+  - 6
+  notes: Paper shows glucagon secretion with and without conditioning on content (n
+    = 365); only the unconditioned trait is mapped here.
+- id: F3A
+  kind: lod_chr
+  source: Figure 3A
+  url: https://jci.org/articles/view/129143
+  traits:
+  - ins_3.3G
+  - ins_8.3G_per_content
+  - ins_GLP1
+  - ins_AA
+  chr: '1'
+  thresholds:
+  - 6
+  notes: 'Paper: Chr 1 LOD profiles for 3.3 and 8.3 mM glucose, GLP1 and amino acids,
+    plus the Ptpn18 eQTL (not available here). The 8.3 mM trait uses the per-content
+    transformation, the one Supplemental Table 1 lists on Chr 1.'
+- id: F3B
+  kind: allele_effects
+  source: Figure 3B
+  url: https://jci.org/articles/view/129143
+  traits:
+  - ins_AA
+  chr: '1'
+  region:
+  - 20
+  - 50
+  notes: 'Paper: founder allele effects for amino acid-induced secretion on Chr 1
+    (CAST high), plus the Ptpn18 eQTL (not available here). Effects by scan1blup.'
+frozen:
+  by: Claude (post hoc figure list; figures get no verdict)
+  at: '2026-10-24T03:18:48Z'
+  sha256: 123c47c4962a00eed36080f2981e5071a0bae70b3f68e071011cebe86ddb4cbe

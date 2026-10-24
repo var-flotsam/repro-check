@@ -61,3 +61,25 @@ claims:
     chr: "2"
     pos_mb: 40
     founders_low: [CAST]
+# Figures to redraw from the run. They get no verdict; numbers they show are
+# checked only through the claims above.
+figures:
+  - id: F1
+    kind: genome_scan
+    source: spec.json traits[0] (stands in for a paper's genome scan figure)
+    traits: [trait_cast_high, trait_positive]
+  - id: F2
+    kind: allele_effects
+    source: spec.json traits[1] (stands in for an allele effect figure)
+    traits: [trait_positive]
+    chr: "3"
+    region: [50, 90]
+  - id: F3
+    kind: lod_chr
+    source: spec.json genes[0]
+    traits: [gene_eqtl]
+    chr: "1"
+  - id: F4
+    kind: peak_map
+    source: all called peaks
+    thresholds: [3]

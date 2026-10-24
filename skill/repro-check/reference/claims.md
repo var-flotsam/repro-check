@@ -71,3 +71,25 @@ Write the reason for any non-default tolerance in `notes`.
 A single listed founder must be the extreme (highest for `founders_high`,
 lowest for `founders_low`). Several listed founders must all fall in that
 half of the eight.
+
+## Figures
+
+Optional `figures:` list in the same file, frozen and hashed with the claims.
+Figures are redrawn from the run; they never get a verdict.
+
+```yaml
+figures:
+  - id: F3B
+    kind: allele_effects     # genome_scan | lod_chr | allele_effects | peak_map
+    source: Figure 3B        # the paper's figure and panel
+    url: https://...         # optional link to the figure
+    traits: [ins_AA]         # genome_scan, lod_chr: 1+; allele_effects: exactly 1; peak_map: optional (all)
+    chr: "1"                 # lod_chr, allele_effects
+    region: [20, 50]         # optional, in the paper's position units
+    thresholds: [6]          # optional LOD lines (default: 6)
+    notes: what the paper shows that this run cannot draw
+```
+
+A figure list written after a run is a separate figures-only file (`paper`
+and `figures`, no `claims`), frozen on its own and passed with `--figures`.
+Its `paper.notes` must say it was declared after the run.

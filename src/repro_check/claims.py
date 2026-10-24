@@ -20,6 +20,7 @@ import yaml
 from .founders import FOUNDER_CODES, normalise_founders
 
 KINDS = ("qtl_peak", "qtl_absent", "effect_pattern", "count", "perm_threshold")
+FIGURE_KINDS = ("genome_scan", "lod_chr", "allele_effects", "peak_map")
 UNITS = ("Mb", "cM")
 
 DEFAULT_TOLERANCE = {
@@ -71,11 +72,29 @@ class Claim:
 
 
 @dataclass
+class Figure:
+    """A paper figure to redraw from this run. Figures never get a verdict."""
+    id: str
+    kind: str
+    source: str
+    traits: list[str] = field(default_factory=list)
+    chr: str | None = None
+    region: list[float] | None = None
+    thresholds: list[float] = field(default_factory=list)
+    url: str = ""
+    notes: str = ""
+
+    def to_dict(self) -> dict[str, Any]:
+        return {k: getattr(self, k) for k in self.__dataclass_fields__}
+
+
+@dataclass
 class ClaimsFile:
     paper: dict[str, Any]
     claims: list[Claim]
     frozen: dict[str, Any] | None
     path: Path | None = None
+    figures: list[Figure] = field(default_factory=list)
 
     def by_id(self) -> dict[str, Claim]:
         return {c.id: c for c in self.claims}
@@ -155,19 +174,62 @@ def _parse_claim(raw: dict[str, Any], index: int, units: str = "Mb") -> Claim:
     return claim
 
 
+def _parse_figure(raw: dict[str, Any], index: int) -> Figure:
+    where = f"figure #{index + 1}"
+    _require(isinstance(raw, dict), f"{where}: must be a mapping")
+    fid = raw.get("id")
+    _require(isinstance(fid, str) and fid, f"{where}: needs a string 'id'")
+    where = f"figure {fid}"
+    unknown = set(raw) - set(Figure.__dataclass_fields__)
+    _require(not unknown, f"{where}: unknown field(s) {sorted(unknown)}")
+    kind = raw.get("kind")
+    _require(kind in FIGURE_KINDS, f"{where}: kind must be one of {', '.join(FIGURE_KINDS)}, got {kind!r}")
+    _require(isinstance(raw.get("source"), str) and raw["source"].strip(),
+             f"{where}: needs 'source' (the paper's figure and panel, e.g. 'Figure 2A')")
+    traits = raw.get("traits") or []
+    _require(isinstance(traits, list) and all(isinstance(t, str) for t in traits),
+             f"{where}: traits must be a list of trait names")
+    region = raw.get("region")
+    if region is not None:
+        _require(isinstance(region, list) and len(region) == 2 and all(isinstance(x, (int, float)) for x in region)
+                 and region[0] < region[1], f"{where}: region must be [start, end] with start < end")
+        region = [float(x) for x in region]
+    fig = Figure(id=fid, kind=kind, source=raw["source"], traits=list(traits),
+                 chr=None if raw.get("chr") is None else str(raw["chr"]), region=region,
+                 thresholds=[float(x) for x in raw.get("thresholds") or []],
+                 url=raw.get("url") or "", notes=raw.get("notes") or "")
+    if kind in ("genome_scan", "lod_chr"):
+        _require(bool(fig.traits), f"{where}: {kind} needs at least one trait")
+    if kind in ("lod_chr", "allele_effects"):
+        _require(fig.chr is not None, f"{where}: {kind} needs 'chr'")
+    if kind == "allele_effects":
+        _require(len(fig.traits) == 1, f"{where}: allele_effects takes exactly one trait")
+    if kind == "genome_scan":
+        _require(region is None and fig.chr is None, f"{where}: genome_scan covers every chromosome")
+    return fig
+
+
 def parse(data: dict[str, Any], path: Path | None = None) -> ClaimsFile:
     _require(isinstance(data, dict), "claims file must be a mapping")
     paper = data.get("paper")
     _require(isinstance(paper, dict) and paper.get("doi"), "claims file needs paper.doi")
-    raw_claims = data.get("claims")
-    _require(isinstance(raw_claims, list) and raw_claims, "claims file needs a non-empty 'claims' list")
+    raw_claims = data.get("claims") or []
+    _require(isinstance(raw_claims, list), "'claims' must be a list")
+    _require(bool(raw_claims) or bool(data.get("figures")),
+             "claims file needs a non-empty 'claims' list (or, for a figures-only file, 'figures')")
     units = paper.get("position_units", "Mb")
     _require(units in UNITS, f"paper.position_units must be one of {UNITS}, got {units!r}")
     claims = [_parse_claim(c, i, units) for i, c in enumerate(raw_claims)]
     ids = [c.id for c in claims]
     dupes = sorted({i for i in ids if ids.count(i) > 1})
     _require(not dupes, f"duplicate claim id(s): {dupes}")
-    return ClaimsFile(paper=paper, claims=claims, frozen=data.get("frozen"), path=path)
+    raw_figures = data.get("figures") or []
+    _require(isinstance(raw_figures, list), "'figures' must be a list")
+    figures = [_parse_figure(f, i) for i, f in enumerate(raw_figures)]
+    fids = [f.id for f in figures]
+    dupes = sorted({i for i in fids if fids.count(i) > 1} | (set(fids) & set(ids)))
+    _require(not dupes, f"duplicate figure id(s) or ids shared with claims: {dupes}")
+    return ClaimsFile(paper=paper, claims=claims, frozen=data.get("frozen"), path=path, figures=figures)
 
 
 def load(path: str | Path) -> ClaimsFile:
@@ -183,8 +245,12 @@ def content_hash(data: dict[str, Any]) -> str:
     """sha256 of the paper and claims sections in canonical JSON.
 
     The `frozen` block is excluded so that recording the hash does not change it.
+    `figures` is included when present, so files without it hash as before.
     """
-    canonical = json.dumps({"paper": data.get("paper"), "claims": data.get("claims")},
+    hashed = {"paper": data.get("paper"), "claims": data.get("claims")}
+    if data.get("figures"):
+        hashed["figures"] = data["figures"]
+    canonical = json.dumps(hashed,
                            sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 

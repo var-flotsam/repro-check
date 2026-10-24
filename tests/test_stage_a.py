@@ -45,8 +45,9 @@ def _pipeline(work: Path) -> dict:
         ["simulate", str(work / "spec.json"), str(work / "sim")],
         ["freeze", str(work / "claims.yaml"), "--by", "test"],
         ["fetch", str(work / "inputs.yaml"), "--run", str(run)],
-        ["run", str(work / "run.yaml"), "--run", str(run)],
+        ["run", str(work / "run.yaml"), "--run", str(run), "--claims", str(work / "claims.yaml")],
         ["compare", str(work / "claims.yaml"), "--run", str(run)],
+        ["figures", str(work / "claims.yaml"), "--run", str(run)],
         ["report", str(work / "claims.yaml"), "--run", str(run)],
     ]
     for s in steps:
@@ -94,3 +95,21 @@ def test_null_traits_rarely_cross_the_paper_threshold(tmp_path):
     out = _pipeline(_stage(tmp_path, spec=spec, claims=claims, run_cfg=run_cfg))
     crossed = {v["claim_id"].split(".")[0] for v in out["verdicts"] if v["verdict"] != "reproduced"}
     assert len(crossed) <= 2, sorted(crossed)
+
+
+def test_figures_are_drawn_without_verdicts(tmp_path):
+    work = _stage(tmp_path)
+    _pipeline(work)
+    figs = work / "run" / "figures"
+    index = json.loads((figs / "index.json").read_text())
+    assert [f["id"] for f in index] == ["F1", "F2", "F3", "F4"]
+    for f in index:
+        assert (figs / f["png"]).stat().st_size > 1000
+        assert (figs / f["pdf"]).exists() and (figs / f["data"]).exists()
+    eff = (figs / "F2.csv").read_text().splitlines()[0]
+    assert all(c in eff for c in '"A","B","C","D","E","F","G","H"'.split(","))
+    report = (work / "run" / "report.md").read_text()
+    section = report.split("## Figures")[1].split("## Assumptions")[0]
+    assert "no verdict" in section
+    for word in ("**reproduced**", "**not reproduced**", "**partly reproduced**"):
+        assert word not in section
