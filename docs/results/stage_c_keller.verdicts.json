@@ -1,0 +1,1435 @@
+{
+  "claims_sha256": "20bfae0e35fc71f983828ce7a7abe33349d3581922e6b10bcbbb89660c13715a",
+  "verdicts": [
+    {
+      "claim_id": "K01",
+      "kind": "qtl_peak",
+      "verdict": "partly reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 29.0228 Mb",
+          "observed": "chr 1 51.8047 Mb (support 25.359\u201355.7652)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.44",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.61",
+          "observed": "6.44",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.17"
+        },
+        {
+          "name": "founder pattern",
+          "passed": false,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "129 > AJ > NOD > NZO > CAST > B6 > PWK > WSB",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": "highest is 129, not CAST"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          24.0228,
+          34.022800000000004
+        ],
+        "window_max_lod": 5.81709438661061,
+        "window_max_pos": 32.254711,
+        "chr": "1",
+        "pos": 51.804719,
+        "lod": 6.4377492277321,
+        "ci": [
+          25.359036,
+          55.765244
+        ],
+        "marker": "1_51804719",
+        "coef": {
+          "A": 0.062666887269417,
+          "B": -0.0555606574449266,
+          "C": 0.464082630856122,
+          "D": 0.0484718176267738,
+          "E": 0.0363333385479912,
+          "F": -0.0445702473110681,
+          "G": -0.220431434589489,
+          "H": -0.290992322929215
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K02",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 29.0228 Mb",
+          "observed": "chr 1 29.0228 Mb (support 24.116\u201351.8093)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.21",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "7.06",
+          "observed": "6.21",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.85"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "CAST > B6 > WSB > NZO > AJ > NOD > PWK > 129",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          24.0228,
+          34.022800000000004
+        ],
+        "window_max_lod": 6.20965234253722,
+        "window_max_pos": 29.022765,
+        "chr": "1",
+        "pos": 29.022765,
+        "lod": 6.20965234253722,
+        "ci": [
+          24.116007,
+          51.809293
+        ],
+        "marker": "1_29022765",
+        "coef": {
+          "A": -0.0447611028373496,
+          "B": 0.096099041376955,
+          "C": -0.372936386235299,
+          "D": -0.0820577959101797,
+          "E": -0.0437151681737235,
+          "F": 0.481017413769465,
+          "G": -0.106805594284003,
+          "H": 0.0731595922938133
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K03",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 29.0228 Mb",
+          "observed": "chr 1 29.0228 Mb (support 25.2336\u201335.1432)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.87",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.13",
+          "observed": "5.87",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.26"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "CAST > B6 > WSB > PWK > NOD > NZO > AJ > 129",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          24.0228,
+          34.022800000000004
+        ],
+        "window_max_lod": 5.87032214119873,
+        "window_max_pos": 29.022765,
+        "chr": "1",
+        "pos": 29.022765,
+        "lod": 5.87032214119873,
+        "ci": [
+          25.233567,
+          35.143241
+        ],
+        "marker": "1_29022765",
+        "coef": {
+          "A": -0.145011764505552,
+          "B": 0.184409647642815,
+          "C": -0.380699275546566,
+          "D": -0.0680402600810118,
+          "E": -0.0924349680672043,
+          "F": 0.4156721535334,
+          "G": 0.0386520422499338,
+          "H": 0.0474524247736178
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K04",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 29.0228 Mb",
+          "observed": "chr 1 29.0228 Mb (support 25.4623\u201336.141)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "7.76",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "7.42",
+          "observed": "7.76",
+          "tolerance": "\u00b11.00",
+          "detail": "difference +0.34"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "CAST > PWK > B6 > WSB > NOD > NZO > AJ > 129",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          24.0228,
+          34.022800000000004
+        ],
+        "window_max_lod": 7.76455256502693,
+        "window_max_pos": 29.022765,
+        "chr": "1",
+        "pos": 29.022765,
+        "lod": 7.76455256502693,
+        "ci": [
+          25.462286,
+          36.14097
+        ],
+        "marker": "1_29022765",
+        "coef": {
+          "A": -0.256262203897279,
+          "B": 0.113275888427639,
+          "C": -0.318212441293854,
+          "D": -0.124179175328401,
+          "E": -0.223020606592219,
+          "F": 0.660206849863842,
+          "G": 0.121615412301499,
+          "H": 0.026576276517883
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K05",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 29.0228 Mb",
+          "observed": "chr 1 29.0228 Mb (support 27.8494\u201331.6568)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.62",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.82",
+          "observed": "6.62",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.20"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "CAST > B6 > PWK > NOD > WSB > NZO > AJ > 129",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          24.0228,
+          34.022800000000004
+        ],
+        "window_max_lod": 6.6206147934769,
+        "window_max_pos": 29.022765,
+        "chr": "1",
+        "pos": 29.022765,
+        "lod": 6.6206147934769,
+        "ci": [
+          27.849446,
+          31.656822
+        ],
+        "marker": "1_29022765",
+        "coef": {
+          "A": -0.274949145885167,
+          "B": 0.232213676472507,
+          "C": -0.330621585511616,
+          "D": -0.00871077510468904,
+          "E": -0.195864356346647,
+          "F": 0.579017240619787,
+          "G": 0.050176097935338,
+          "H": -0.0512611521799457
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K06",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 29.0228 Mb",
+          "observed": "chr 1 29.0228 Mb (support 25.3747\u201331.4062)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "7.40",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "7.35",
+          "observed": "7.40",
+          "tolerance": "\u00b11.00",
+          "detail": "difference +0.05"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "CAST > B6 > PWK > WSB > NOD > NZO > AJ > 129",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          24.0228,
+          34.022800000000004
+        ],
+        "window_max_lod": 7.39805832209856,
+        "window_max_pos": 29.022765,
+        "chr": "1",
+        "pos": 29.022765,
+        "lod": 7.39805832209856,
+        "ci": [
+          25.374719,
+          31.406154
+        ],
+        "marker": "1_29022765",
+        "coef": {
+          "A": -0.237344191793876,
+          "B": 0.214221506513786,
+          "C": -0.404425726684904,
+          "D": -0.0535202310805317,
+          "E": -0.156245310691991,
+          "F": 0.579783579766093,
+          "G": 0.0610868840513948,
+          "H": -0.00355651008051942
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K07",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 1 33.8178 Mb",
+          "observed": "chr 1 33.8178 Mb (support 27.8494\u2013135.482)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "7.07",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.94",
+          "observed": "7.07",
+          "tolerance": "\u00b11.00",
+          "detail": "difference +0.13"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: CAST; low: \u2014",
+          "observed": "CAST > B6 > 129 > WSB > NZO > NOD > AJ > PWK",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          28.8178,
+          38.8178
+        ],
+        "window_max_lod": 7.06676017776374,
+        "window_max_pos": 33.817812,
+        "chr": "1",
+        "pos": 33.817812,
+        "lod": 7.06676017776374,
+        "ci": [
+          27.849446,
+          135.482172
+        ],
+        "marker": "1_33817812",
+        "coef": {
+          "A": -0.24522554504981,
+          "B": 0.141958157130081,
+          "C": 0.0422941826528832,
+          "D": -0.243412697813973,
+          "E": -0.233496858038586,
+          "F": 0.759995449054968,
+          "G": -0.258417676153284,
+          "H": 0.0363049882172463
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K08",
+      "kind": "qtl_peak",
+      "verdict": "partly reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 2 83.826 Mb",
+          "observed": "chr 2 91.4305 Mb (support 76.0252\u201392.6618)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.39",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": false,
+          "claimed": "7.54",
+          "observed": "6.39",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -1.15"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          78.826,
+          88.826
+        ],
+        "window_max_lod": 6.29034078214471,
+        "window_max_pos": 83.826005,
+        "chr": "2",
+        "pos": 91.430534,
+        "lod": 6.38715305509284,
+        "ci": [
+          76.02525,
+          92.661759
+        ],
+        "marker": "2_91430534",
+        "coef": {
+          "A": -0.0258801503458415,
+          "B": 0.102642665910682,
+          "C": -0.00794734042503337,
+          "D": 0.00143397123508212,
+          "E": -0.207803222036127,
+          "F": -0.1874092189227,
+          "G": 0.0684823723744042,
+          "H": 0.256480922209648
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K09",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 41.1508 Mb",
+          "observed": "chr 3 70.0835 Mb (support 40.0319\u201373.5995)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.05",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": false,
+          "claimed": "6.35",
+          "observed": "5.05",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -1.30"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          36.1508,
+          46.1508
+        ],
+        "window_max_lod": 4.51776439791439,
+        "window_max_pos": 41.150846,
+        "chr": "3",
+        "pos": 70.083458,
+        "lod": 5.04595640342607,
+        "ci": [
+          40.031868,
+          73.599452
+        ],
+        "marker": "3_70083458",
+        "coef": {
+          "A": -0.168442964107054,
+          "B": -0.204194588018734,
+          "C": 0.0424012385757708,
+          "D": 0.0573937911005079,
+          "E": 0.0442271876023238,
+          "F": 0.00536242387494874,
+          "G": -0.12660746498197,
+          "H": 0.349860375954355
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K10",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 135.518 Mb",
+          "observed": "chr 3 135.518 Mb (support 130.938\u2013136.08)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "7.41",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "8.26",
+          "observed": "7.41",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.85"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > WSB > AJ > 129 > B6 > NZO > CAST > PWK",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          130.5183,
+          140.5183
+        ],
+        "window_max_lod": 7.40729421083287,
+        "window_max_pos": 135.518256,
+        "chr": "3",
+        "pos": 135.518256,
+        "lod": 7.40729421083287,
+        "ci": [
+          130.937854,
+          136.080411
+        ],
+        "marker": "3_135518256",
+        "coef": {
+          "A": 0.0808432818828405,
+          "B": -0.0727078738411698,
+          "C": 0.0157088921668986,
+          "D": 0.428693035683101,
+          "E": -0.0743400127993218,
+          "F": -0.221018496581196,
+          "G": -0.282127145739574,
+          "H": 0.124948319228421
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K11",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": false,
+          "claimed": "chr 3 135.518 Mb",
+          "observed": "no called peak in window",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": "max LOD in window 4.83"
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "4.83",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          130.5183,
+          140.5183
+        ],
+        "window_max_lod": 4.82792062575142,
+        "window_max_pos": 135.518256
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K12",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 135.233 Mb",
+          "observed": "chr 3 135.72 Mb (support 132.568\u2013137.961)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.23",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.82",
+          "observed": "6.23",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.59"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > WSB > AJ > NZO > B6 > 129 > PWK > CAST",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          130.2328,
+          140.2328
+        ],
+        "window_max_lod": 6.23478695324282,
+        "window_max_pos": 135.7203,
+        "chr": "3",
+        "pos": 135.7203,
+        "lod": 6.23478695324282,
+        "ci": [
+          132.568298,
+          137.961468
+        ],
+        "marker": "3_135720300",
+        "coef": {
+          "A": 0.062623086542288,
+          "B": -0.0412955403077736,
+          "C": -0.114853980604646,
+          "D": 0.320745128806001,
+          "E": -0.0155748451871191,
+          "F": -0.164986365815711,
+          "G": -0.148252676110565,
+          "H": 0.101595192677596
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K13",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 136.023 Mb",
+          "observed": "chr 3 136.023 Mb (support 132.558\u2013138.182)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.90",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.73",
+          "observed": "6.90",
+          "tolerance": "\u00b11.00",
+          "detail": "difference +0.18"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > 129 > AJ > WSB > B6 > NZO > CAST > PWK",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          131.0228,
+          141.0228
+        ],
+        "window_max_lod": 6.90363591099548,
+        "window_max_pos": 136.02282,
+        "chr": "3",
+        "pos": 136.02282,
+        "lod": 6.90363591099548,
+        "ci": [
+          132.558057,
+          138.181995
+        ],
+        "marker": "3_136022820",
+        "coef": {
+          "A": 0.0681240301496191,
+          "B": -0.0306990970980846,
+          "C": 0.0970756568014802,
+          "D": 0.390778789479801,
+          "E": -0.0388872122574328,
+          "F": -0.218676201758072,
+          "G": -0.335573724452423,
+          "H": 0.0678577591351199
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K14",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 135.518 Mb",
+          "observed": "chr 3 133.553 Mb (support 126.027\u2013143.168)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.86",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.38",
+          "observed": "5.86",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.52"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > B6 > WSB > AJ > 129 > NZO > CAST > PWK",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          130.5183,
+          140.5183
+        ],
+        "window_max_lod": 5.85875003882134,
+        "window_max_pos": 133.553362,
+        "chr": "3",
+        "pos": 133.553362,
+        "lod": 5.85875003882134,
+        "ci": [
+          126.027449,
+          143.167525
+        ],
+        "marker": "3_133553362",
+        "coef": {
+          "A": 0.119197110701509,
+          "B": 0.181481847579292,
+          "C": 0.0668541850026348,
+          "D": 0.182099795365515,
+          "E": -0.0978205472255701,
+          "F": -0.301053201557065,
+          "G": -0.301297793060939,
+          "H": 0.15053860319463
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K15",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": false,
+          "claimed": "chr 3 135.518 Mb",
+          "observed": "no called peak in window",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": "max LOD in window 3.47"
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "3.47",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          130.5183,
+          140.5183
+        ],
+        "window_max_lod": 3.47016704259192,
+        "window_max_pos": 135.518256
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K16",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 133.561 Mb",
+          "observed": "chr 3 133.651 Mb (support 130.942\u2013138.089)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.77",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.09",
+          "observed": "5.77",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.33"
+        },
+        {
+          "name": "founder pattern",
+          "passed": false,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > AJ > B6 > 129 > WSB > NZO > CAST > PWK",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": "not in upper half: WSB"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          128.5613,
+          138.5613
+        ],
+        "window_max_lod": 5.76701462818519,
+        "window_max_pos": 133.651296,
+        "chr": "3",
+        "pos": 133.651296,
+        "lod": 5.76701462818519,
+        "ci": [
+          130.941666,
+          138.088594
+        ],
+        "marker": "3_133651296",
+        "coef": {
+          "A": 0.143269880484685,
+          "B": 0.135395508703862,
+          "C": 0.0789879782609587,
+          "D": 0.191045441011506,
+          "E": -0.0533835688691283,
+          "F": -0.245852205439161,
+          "G": -0.315571608997096,
+          "H": 0.0661085748443378
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K17",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 133.651 Mb",
+          "observed": "chr 3 133.651 Mb (support 132.558\u2013148.414)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.64",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.06",
+          "observed": "5.64",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.41"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > WSB > B6 > 129 > AJ > NZO > PWK > CAST",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          128.6513,
+          138.6513
+        ],
+        "window_max_lod": 5.64435395857041,
+        "window_max_pos": 133.651296,
+        "chr": "3",
+        "pos": 133.651296,
+        "lod": 5.64435395857041,
+        "ci": [
+          132.558057,
+          148.413815
+        ],
+        "marker": "3_133651296",
+        "coef": {
+          "A": 0.00531137298611566,
+          "B": 0.122448091902392,
+          "C": 0.0617852414939997,
+          "D": 0.154914017897251,
+          "E": -0.0220058340523095,
+          "F": -0.239333678963096,
+          "G": -0.20639925259397,
+          "H": 0.123280041329621
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K18",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 3 133.651 Mb",
+          "observed": "chr 3 133.651 Mb (support 130.934\u2013148.099)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.52",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.17",
+          "observed": "5.52",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.64"
+        },
+        {
+          "name": "founder pattern",
+          "passed": true,
+          "claimed": "high: NOD, WSB; low: CAST, PWK",
+          "observed": "NOD > B6 > 129 > WSB > AJ > NZO > CAST > PWK",
+          "tolerance": "a single listed founder must be the extreme; several must all fall in that half",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          128.6513,
+          138.6513
+        ],
+        "window_max_lod": 5.5227007377178,
+        "window_max_pos": 133.651296,
+        "chr": "3",
+        "pos": 133.651296,
+        "lod": 5.5227007377178,
+        "ci": [
+          130.934042,
+          148.0993
+        ],
+        "marker": "3_133651296",
+        "coef": {
+          "A": 0.0307078038460367,
+          "B": 0.0839017014908925,
+          "C": 0.0584942964386361,
+          "D": 0.149121442174223,
+          "E": 0.0125373893683308,
+          "F": -0.17292856043744,
+          "G": -0.201012999681326,
+          "H": 0.0391789268006256
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K19",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 10 102.456 Mb",
+          "observed": "chr 10 98.9982 Mb (support 88.9227\u2013105.549)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.22",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.08",
+          "observed": "5.22",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.86"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          97.4561,
+          107.4561
+        ],
+        "window_max_lod": 5.22231844471784,
+        "window_max_pos": 98.998199,
+        "chr": "10",
+        "pos": 98.998199,
+        "lod": 5.22231844471784,
+        "ci": [
+          88.92267,
+          105.549377
+        ],
+        "marker": "10_98998199",
+        "coef": {
+          "A": -0.240196267308807,
+          "B": 0.131891548950621,
+          "C": 0.125483671134123,
+          "D": -0.077606607967163,
+          "E": 0.0454754373309241,
+          "F": 0.106262000205818,
+          "G": -0.0778992435678222,
+          "H": -0.0134105387776558
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K20",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 14 78.899 Mb",
+          "observed": "chr 14 79.2106 Mb (support 78.6143\u201381.0268)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "5.97",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": false,
+          "claimed": "7.07",
+          "observed": "5.97",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -1.10"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          73.899,
+          83.899
+        ],
+        "window_max_lod": 5.9683134323925,
+        "window_max_pos": 79.210553,
+        "chr": "14",
+        "pos": 79.210553,
+        "lod": 5.9683134323925,
+        "ci": [
+          78.61428,
+          81.02685
+        ],
+        "marker": "14_79210553",
+        "coef": {
+          "A": 0.0286659423374107,
+          "B": 0.0441235871758652,
+          "C": -0.0673656304317389,
+          "D": -0.326175735386555,
+          "E": -0.0288277739694497,
+          "F": 0.247433863924842,
+          "G": -0.021844089493897,
+          "H": 0.123989833470169
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K21",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": false,
+          "claimed": "chr 16 28.3788 Mb",
+          "observed": "no called peak in window",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": "max LOD in window 3.94"
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "3.94",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          23.3788,
+          33.3788
+        ],
+        "window_max_lod": 3.93935875893595,
+        "window_max_pos": 24.154822
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K22",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 19 4.9781 Mb",
+          "observed": "chr 19 4.97811 Mb (support 3.98995\u20136.20552)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.26",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.31",
+          "observed": "6.26",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.05"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          -0.021899999999999586,
+          9.978100000000001
+        ],
+        "window_max_lod": 6.26493159647581,
+        "window_max_pos": 4.97811,
+        "chr": "19",
+        "pos": 4.97811,
+        "lod": 6.26493159647581,
+        "ci": [
+          3.98995,
+          6.205523
+        ],
+        "marker": "19_4978110",
+        "coef": {
+          "A": -0.0810766338517305,
+          "B": 0.378774861093201,
+          "C": -0.0135438419417553,
+          "D": -0.127412103646856,
+          "E": 0.0326733935411756,
+          "F": -0.409763098891764,
+          "G": 0.0569501854135313,
+          "H": 0.163397238284225
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K23",
+      "kind": "qtl_peak",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": true,
+          "claimed": "chr 19 4.9781 Mb",
+          "observed": "chr 19 4.97811 Mb (support 4.26737\u20136.20552)",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": ""
+        },
+        {
+          "name": "threshold",
+          "passed": true,
+          "claimed": "LOD \u2265 6",
+          "observed": "6.11",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        },
+        {
+          "name": "LOD",
+          "passed": true,
+          "claimed": "6.28",
+          "observed": "6.11",
+          "tolerance": "\u00b11.00",
+          "detail": "difference -0.17"
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          -0.021899999999999586,
+          9.978100000000001
+        ],
+        "window_max_lod": 6.11114102195829,
+        "window_max_pos": 4.97811,
+        "chr": "19",
+        "pos": 4.97811,
+        "lod": 6.11114102195829,
+        "ci": [
+          4.267368,
+          6.205523
+        ],
+        "marker": "19_4978110",
+        "coef": {
+          "A": -0.040585673737313,
+          "B": 0.302696698638052,
+          "C": -0.0689650293620687,
+          "D": -0.0987790070662837,
+          "E": 0.011757391861166,
+          "F": -0.429966979376876,
+          "G": 0.156796632701227,
+          "H": 0.167045966342128
+        }
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K24",
+      "kind": "qtl_peak",
+      "verdict": "not reproduced",
+      "checks": [
+        {
+          "name": "position",
+          "passed": false,
+          "claimed": "chr 19 5 Mb",
+          "observed": "no called peak in window",
+          "tolerance": "\u00b15 Mb, or claimed position inside the observed support interval",
+          "detail": "max LOD in window 2.97"
+        },
+        {
+          "name": "threshold",
+          "passed": false,
+          "claimed": "LOD \u2265 6",
+          "observed": "2.97",
+          "tolerance": "paper's threshold",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          0.0,
+          10.0
+        ],
+        "window_max_lod": 2.96543291196437,
+        "window_max_pos": 7.575693
+      },
+      "reason": ""
+    },
+    {
+      "claim_id": "K25",
+      "kind": "qtl_absent",
+      "verdict": "reproduced",
+      "checks": [
+        {
+          "name": "stays below threshold",
+          "passed": true,
+          "claimed": "max LOD < 6",
+          "observed": "3.90 at 92.7777 Mb",
+          "tolerance": "window \u00b15 Mb",
+          "detail": ""
+        }
+      ],
+      "observed": {
+        "window_mb": [
+          85.7,
+          95.7
+        ],
+        "window_max_lod": 3.89697662661034,
+        "window_max_pos": 92.777702
+      },
+      "reason": ""
+    }
+  ],
+  "tally": {
+    "reproduced": 11,
+    "partly reproduced": 2,
+    "not reproduced": 12,
+    "not checkable": 0
+  }
+}
