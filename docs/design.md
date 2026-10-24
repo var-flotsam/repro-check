@@ -1,7 +1,6 @@
 # repro-check design
 
-Status: **draft for approval** (Phase 2). Nothing in Phases 3–7 starts until
-Ethan approves this file.
+Status: approved 2026-10-23; section 11 (figures) added 2026-10-24.
 
 ## 1. Principles
 
@@ -193,3 +192,46 @@ claims about why.
    assumption about which mice were in the interim set.
 3. The skill name: `repro-check`, or the recommended gerund form
    `checking-reproducibility`?
+
+## 11. Figures (added 2026-10-24 at the owner's request)
+
+The skill also redraws the paper's figures from the numbers it computed, so a
+reader can put the paper's figure and ours side by side.
+
+**Rules**
+
+1. **A figure gets no verdict.** Whether two plots "look the same" is a
+   judgment, and principle 1 says the model never makes one. Each redrawn
+   figure is labelled "regenerated from this run; compare by eye; no verdict".
+   The report never says a figure was reproduced.
+2. **What a figure shows numerically becomes a claim.** If a figure shows a
+   peak, an effect sign or a threshold, that number is written as an ordinary
+   claim (with the figure as its `source`) and checked by `compare.py`.
+3. **Figures are declared before the run.** A `figures:` list in the claims
+   file names each paper figure (number and panel), what to draw, the traits
+   and the region. It is frozen and hashed with the claims, so the set of
+   figures can't be chosen after seeing the results. (Files without
+   `figures:` hash as before, so earlier frozen files stay valid.)
+4. **Same axes as the paper.** Units, trait transformation, chromosome range
+   and founder colours follow the paper where it states them; where it
+   doesn't, the choice is listed under assumptions.
+5. **We never copy the paper's figure images** (journal copyright). The
+   report links to the figure by number and URL.
+
+**Figure kinds (R/qtl2 engine)**
+
+| kind | draws | from |
+|---|---|---|
+| `genome_scan` | LOD across all chromosomes, threshold lines | `lod_profile.csv.gz` |
+| `lod_chr` | LOD on one chromosome or region, support interval shaded | `lod_profile.csv.gz` |
+| `allele_effects` | founder effects (CC colours) along a region, LOD below | engine `effects_<id>.csv` |
+| `peak_map` | every called peak by trait and position (like a QTL heat map) | `results.json` |
+
+Output: `RUN/figures/<id>.png` and `.pdf`, plus the data behind each figure as
+CSV, listed in a "Figures" section of the report.
+
+**Where it fits in the plan.** This is built and tried on Stage B and Keller
+(the Keller run data is on the owner's PC) before Phase 6. In Phase 6 each eval
+paper declares its figures too. Evals score only verdicts, so figures don't
+change the false "reproduced" rate. They do add one check: the report must
+never put a verdict on a figure.
