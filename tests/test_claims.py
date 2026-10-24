@@ -123,3 +123,16 @@ def test_perm_threshold_needs_alpha():
     d["claims"] = [{"id": "P", "kind": "perm_threshold", "source": "s", "quote": "q", "trait": "t", "value": 3.4}]
     with pytest.raises(cm.ClaimsError, match="alpha"):
         cm.parse(d)
+
+
+
+def test_package_reads_and_writes_text_as_utf8():
+    # On Windows the default is cp1252, which changed the claims hash of a file
+    # containing "±" and voided a run. Every text read/write must name UTF-8.
+    import re
+    from pathlib import Path
+    src = Path(__file__).resolve().parents[1] / "src" / "repro_check"
+    bad = [f"{f.name}:{n}" for f in src.glob("*.py")
+           for n, line in enumerate(f.read_text(encoding="utf-8").splitlines(), 1)
+           if re.search(r"\.(read|write)_text\(", line) and 'encoding="utf-8"' not in line]
+    assert not bad, bad

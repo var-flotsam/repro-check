@@ -60,7 +60,7 @@ def _compare(a) -> int:
     verdicts = compare_mod.compare_all(cf.claims, res)
     payload = {"claims_sha256": cf.frozen["sha256"], "verdicts": [v.to_dict() for v in verdicts],
                "tally": compare_mod.tally(verdicts)}
-    (run_dir / "verdicts.json").write_text(json.dumps(payload, indent=2))
+    (run_dir / "verdicts.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
     for v in verdicts:
         print(f"{v.claim_id}: {v.verdict}")
     return 0
@@ -69,7 +69,7 @@ def _compare(a) -> int:
 def _report(a) -> int:
     cf = claims_mod.load_frozen(a.claims)
     run_dir = Path(a.run)
-    payload = json.loads((run_dir / "verdicts.json").read_text())
+    payload = json.loads((run_dir / "verdicts.json").read_text(encoding="utf-8"))
     if payload["claims_sha256"] != cf.frozen["sha256"]:
         raise claims_mod.ClaimsError("verdicts.json was computed from different claims; rerun compare")
     verdicts = [
@@ -78,7 +78,7 @@ def _report(a) -> int:
     ]
     text = report_mod.render(cf, verdicts, run_dir)
     out = Path(a.out) if a.out else run_dir / "report.md"
-    out.write_text(text)
+    out.write_text(text, encoding="utf-8")
     print(f"wrote {out}")
     return 0
 

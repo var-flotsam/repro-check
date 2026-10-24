@@ -158,8 +158,8 @@ def render(claims: ClaimsFile, verdicts: list[Verdict], run_dir: Path) -> str:
 
 
 def _read_json(path: Path) -> Any:
-    return json.loads(path.read_text()) if path.exists() else None
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
 
 
 def _read_yaml(path: Path) -> Any:
-    return yaml.safe_load(path.read_text()) if path.exists() else None
+    return yaml.safe_load(path.read_text(encoding="utf-8")) if path.exists() else None

@@ -173,7 +173,7 @@ def parse(data: dict[str, Any], path: Path | None = None) -> ClaimsFile:
 def load(path: str | Path) -> ClaimsFile:
     path = Path(path)
     try:
-        data = yaml.safe_load(path.read_text())
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
     except yaml.YAMLError as e:
         raise ClaimsError(f"{path}: not valid YAML: {e}") from e
     return parse(data, path)
@@ -192,7 +192,7 @@ def content_hash(data: dict[str, Any]) -> str:
 def freeze(path: str | Path, by: str, now: dt.datetime | None = None) -> str:
     """Validate, then write the frozen block into the file. Returns the hash."""
     path = Path(path)
-    data = yaml.safe_load(path.read_text())
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
     parse(data, path)
     if data.get("frozen"):
         raise ClaimsError(f"{path}: already frozen at {data['frozen'].get('at')}; "
@@ -201,14 +201,14 @@ def freeze(path: str | Path, by: str, now: dt.datetime | None = None) -> str:
     digest = content_hash(data)
     now = now or dt.datetime.now(dt.timezone.utc)
     data["frozen"] = {"by": by, "at": now.strftime("%Y-%m-%dT%H:%M:%SZ"), "sha256": digest}
-    path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True))
+    path.write_text(yaml.safe_dump(data, sort_keys=False, allow_unicode=True), encoding="utf-8")
     return digest
 
 
 def load_frozen(path: str | Path) -> ClaimsFile:
     """Load a claims file and check it is frozen and unchanged since."""
     path = Path(path)
-    data = yaml.safe_load(path.read_text())
+    data = yaml.safe_load(path.read_text(encoding="utf-8"))
     cf = parse(data, path)
     frozen = data.get("frozen")
     if not frozen or not frozen.get("sha256"):

@@ -110,7 +110,7 @@ def build_engine_config(cfg: dict[str, Any], run_dir: Path) -> dict[str, Any]:
     if "seed" not in cfg:
         raise RunError("run config needs an explicit 'seed'")
     prov_path = run_dir / "provenance.json"
-    provenance = json.loads(prov_path.read_text()) if prov_path.exists() else {"inputs": {}}
+    provenance = json.loads(prov_path.read_text(encoding="utf-8")) if prov_path.exists() else {"inputs": {}}
     out = {k: _resolve(v, run_dir, provenance) for k, v in cfg.items() if k in ENGINE_KEYS}
     out["out_dir"] = str((run_dir / "engine").resolve())
     return out
@@ -120,15 +120,15 @@ def run(config: str | Path, run_dir: str | Path) -> Path:
     config = Path(config)
     run_dir = Path(run_dir)
     run_dir.mkdir(parents=True, exist_ok=True)
-    cfg = yaml.safe_load(config.read_text()) or {}
+    cfg = yaml.safe_load(config.read_text(encoding="utf-8")) or {}
     engine_cfg = build_engine_config(cfg, run_dir)
-    (run_dir / "run_config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False))
+    (run_dir / "run_config.yaml").write_text(yaml.safe_dump(cfg, sort_keys=False), encoding="utf-8")
     cfg_path = run_dir / "engine_config.json"
-    cfg_path.write_text(json.dumps(engine_cfg, indent=2))
+    cfg_path.write_text(json.dumps(engine_cfg, indent=2), encoding="utf-8")
     exe = rscript()
     proc = subprocess.run([exe, str(engine_dir() / "engine.R"), str(cfg_path)],
                           capture_output=True, text=True, env=r_env())
-    (run_dir / "engine.log").write_text(proc.stdout + proc.stderr)
+    (run_dir / "engine.log").write_text(proc.stdout + proc.stderr, encoding="utf-8")
     if proc.returncode != 0:
         raise RunError(f"engine failed (exit {proc.returncode}); last lines:\n"
                        + "\n".join((proc.stdout + proc.stderr).strip().splitlines()[-15:]))
@@ -139,7 +139,7 @@ def run(config: str | Path, run_dir: str | Path) -> Path:
         "rscript": exe,
         "session_info": "engine/session_info.txt",
     }
-    (run_dir / "environment.json").write_text(json.dumps(env, indent=2))
+    (run_dir / "environment.json").write_text(json.dumps(env, indent=2), encoding="utf-8")
     return run_dir / "engine"
 
 

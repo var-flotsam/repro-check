@@ -81,7 +81,7 @@ def read_profile(path: Path) -> Profile:
 
 def load(run_dir: str | Path) -> RunResults:
     run_dir = Path(run_dir)
-    raw = json.loads((run_dir / "results.json").read_text())
+    raw = json.loads((run_dir / "results.json").read_text(encoding="utf-8"))
     profile = read_profile(run_dir / raw.get("profile", "lod_profile.csv.gz"))
     peaks = [
         Peak(trait=p["trait"], chr=str(p["chr"]), pos=float(p["pos"]), lod=float(p["lod"]),

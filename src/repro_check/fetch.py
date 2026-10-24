@@ -66,7 +66,7 @@ def _download(url: str, dest: Path, timeout: float) -> None:
 
 
 def load_manifest(path: Path) -> list[dict[str, Any]]:
-    data = yaml.safe_load(path.read_text()) or {}
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     inputs = data.get("inputs")
     if not isinstance(inputs, list) or not inputs:
         raise FetchError(f"{path}: needs a non-empty 'inputs' list")
@@ -118,5 +118,5 @@ def fetch(manifest: str | Path, run_dir: str | Path, timeout: float = 600.0) -> 
             "citation": item.get("citation"),
         }
     prov = {"manifest": str(manifest), "manifest_sha256": sha256_file(manifest), "inputs": records}
-    (run_dir / "provenance.json").write_text(json.dumps(prov, indent=2))
+    (run_dir / "provenance.json").write_text(json.dumps(prov, indent=2), encoding="utf-8")
     return prov

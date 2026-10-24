@@ -60,7 +60,7 @@ cores: 4
 assumptions:
 - 'Genotype probabilities: public attie_DO500_genoprobs_v5.rds (JAX). The paper does not say which genoprobs build
   it used; GRCm38 assumed.'
-- 'Phenotypes from MPD Attie2, matched to the paper''s trait labels by MPD measure number (trait_map.csv): ''X |
+- 'Phenotypes from MPD Attie2, matched to the paper''s trait labels through trait_map.csv (MPD measure number and export column): ''X |
   3.3G'' and ''X | 8.3G'' are MPD fold-change measures, ''X | ins/islet'' is percent of islet insulin content, unlabelled
   traits are raw secretion.'
 - Every trait is log-transformed (natural log), as the paper states; non-positive values become missing and are
