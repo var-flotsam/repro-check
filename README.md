@@ -5,7 +5,7 @@ public data in a pinned environment and reports which results come back,
 using numeric tolerances fixed before the run. The model never decides
 agreement; `repro_check.compare` does.
 
-Work in progress (Phase 4 of 7). Design: [docs/design.md](docs/design.md).
+Work in progress (Phase 5 of 7). Design: [docs/design.md](docs/design.md).
 Status and open questions: [docs/HANDOFF.md](docs/HANDOFF.md).
 
 ## Layout
@@ -38,3 +38,10 @@ uv run bash examples/stage_a/run.sh   # writes runs/stage_a/report.md
 | qtl2data `DOex` | 1 | 1 | 0 |
 
 Full reports: [iron](docs/results/stage_b_iron.md), [DOex](docs/results/stage_b_doex.md).
+
+## Keller et al. 2019 (Phase 5)
+
+25 claims from the paper's Supplemental Table 1 and Results text, frozen
+before any data was fetched, rerun on the public 500-mouse genoprobs and MPD
+Attie2 traits: **11 reproduced, 2 partly reproduced, 12 not reproduced**.
+Full report: [docs/results/stage_c_keller.md](docs/results/stage_c_keller.md).

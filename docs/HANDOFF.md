@@ -1,6 +1,6 @@
 # HANDOFF
 
-Last updated: 2026-10-23, end of Phase 4.
+Last updated: 2026-10-24, end of Phase 5.
 
 ## Project
 
@@ -27,7 +27,8 @@ within tolerances set before the run. Flagship: Keller et al. 2019 JCI
 | 2. design.md | Approved by owner 2026-10-23 (section 10 points taken at their defaults, see below) |
 | 3. Synthetic tests and skeleton | Done |
 | 4. R/qtl2 warm-up | Done: iron 10/11 reproduced, DOex 1/1 reproduced (see below) |
-| 5–7 | Not started |
+| 5. Keller 2019 | Done: 11 reproduced, 2 partly, 12 not reproduced (see below) |
+| 6–7 | Not started |
 
 Repository: https://github.com/var-flotsam/repro-check (branch `main`).
 Phases 1–2 were pushed 2026-10-22 with the owner's OK; the owner later approved
@@ -100,6 +101,31 @@ pushing each phase to this repo ("yes to all"). Licence: MIT (owner, 2026-10-23)
 - `tests/test_stage_b.py` (markers `r` and `network`) reruns both warm-ups
   without permutations. 71 pytest pass locally.
 
+## Phase 5 outputs
+
+- `examples/stage_c_keller/`: claims frozen before any data was fetched
+  (owner via decision card 2026-10-23T03:36Z, sha256 20bfae0e…), inputs
+  manifest, `trait_map.csv` (paper label → MPD measure number and export
+  column), `prepare.R`, `run.yaml`, `run.sh`.
+- Ran on the owner's Windows PC (`C:\Users\michaelsoft\repos\repro-check`,
+  micromamba env in `.renv`, inputs in `runs/stage_c_keller/`). Rscript under
+  Git Bash needs `.renv\Library\bin` and `.renv` on PATH.
+- Report: `docs/results/stage_c_keller.md` (+ verdicts, prepare log).
+  N = 479 for most insulin traits (matches the paper), 365 for glucagon;
+  500 genotyped mice, 68,985 markers.
+- Reproduced: Chr 1 (Ptpn18) K02, K04–K07; Chr 3 hotspot K10, K12, K13;
+  Chr 19 K22, K23; Hunk null K25. Partly: K01 (peak called at 51.8 Mb, 129
+  highest, not CAST), K08 (LOD 6.39 vs 7.54). Not reproduced: six peaks at the
+  right place within ±1 LOD but just under LOD 6 (K03, K14, K16–K19), K09 and
+  K20 lower still, and no peak for K11, K15, K21 (Chr 16 table row) or K24
+  (glucagon).
+- Found and fixed: Python read files with the Windows locale (cp1252), which
+  changed the frozen hash of a file containing "±". That run used
+  PYTHONUTF8=1; the frozen hash was verified against the original bytes. All
+  reads/writes now name UTF-8, with a test.
+- Not done: the 1,000-permutation check (deferred for run time), the 60-QTL
+  count, the N = 300 interim scan.
+
 ## Decisions taken without an explicit answer
 
 Design section 10 was approved as a whole, so: default tolerances as
@@ -117,12 +143,11 @@ claims are drafted.
 - A null-trait sim showed 1 of 20 noise traits crossing LOD 6 on a small
   genome: expected nulls can fail by chance. Keep this in mind for the
   Hunk/Zfp148 absence claims and say it in the report.
-- Phase 5 (Keller 2019) needs jax.org/box.com/phenome.jax.org/cloudfront.net.
-  Run it from a session on the new environment or on the owner's machine.
-  Draft claims from docs/phase1/keller2019-data-availability.md, offer the
-  optional N = 300 interim scan, and get the owner's confirmation before
-  freezing.
+- Phase 6: evals on 5+ published analyses, scoring verdict accuracy and the
+  false "reproduced" rate first. Candidate papers to be listed for the
+  owner's approval before any claims are drafted. Stage A false claims and
+  the Keller not-reproduced claims are useful negative cases.
 
 ## Open questions for the owner
 
-Where Phase 5 should run (new cloud environment or the owner's machine).
+Approval of the Phase 6 eval papers (to be proposed).
